@@ -38,7 +38,7 @@ if not exist "dist" mkdir dist
 REM Create zip package
 echo Creating package...
 REM Using PowerShell Compress-Archive for better compatibility
-powershell -Command "& { $files = @('*.js','*.json','_locales','api','src'); Compress-Archive -Path $files -DestinationPath 'dist\QuickFilterBy.zip' -Force }" 2>nul
+powershell -Command "& { $files = @('*.js','*.json','_locales','api','src','options'); Compress-Archive -Path $files -DestinationPath 'dist\QuickFilterBy.zip' -Force }" 2>nul
 
 if %errorlevel% neq 0 (
     echo Build failed: Could not create package

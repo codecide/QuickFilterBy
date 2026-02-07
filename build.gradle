@@ -15,6 +15,7 @@ task build(type: Zip) {
     include '_locales/**'
     include 'api/**'
     include 'src/**'
+    include 'options/**'
     exclude '*.DS_Store'
     exclude '.git/**'
     exclude 'node_modules/**'

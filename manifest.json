@@ -13,8 +13,19 @@
   },
   "background": {
     "scripts": [
-      "background.js"
+      "background.js",
+      "src/utils/errors.js",
+      "src/utils/version.js",
+      "src/utils/dom.js",
+      "src/utils/logger.js",
+      "src/utils/settings.js",
+      "src/utils/features.js",
+      "src/utils/health.js"
     ]
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
   },
   "experiment_apis": {
     "MessagesListAdapter": {
@@ -37,6 +48,8 @@
   },
   "permissions": [
     "menus",
-    "messagesRead"
+    "messagesRead",
+    "storage",
+    "notifications"
   ]
 }

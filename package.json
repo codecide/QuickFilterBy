@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "build": "npm run clean && mkdir -p dist && zip -r dist/QuickFilterBy.xpi *.js *.json _locales api src -x *.DS_Store",
+    "build": "npm run clean && mkdir -p dist && zip -r dist/QuickFilterBy.xpi *.js *.json _locales api src options -x *.DS_Store",
     "clean": "rm -rf dist",
     "install": "npm run build",
     "checksum": "sha256sum dist/QuickFilterBy.xpi > dist/QuickFilterBy.xpi.sha256",

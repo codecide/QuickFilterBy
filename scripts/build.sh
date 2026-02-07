@@ -50,6 +50,7 @@ build() {
         _locales/ \
         api/ \
         src/ \
+        options/ \
         -x "*.DS_Store" \
         -x "dist/*" \
         -x ".git/*" \

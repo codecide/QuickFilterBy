@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'">
+  <title>QuickFilterBy - Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>QuickFilterBy Settings</h1>
+      <p class="subtitle">Customize your Quick Filter experience</p>
+    </header>
+
+    <main>
+      <!-- General Settings -->
+      <section class="settings-section">
+        <h2>General</h2>
+
+        <div class="setting-row">
+          <label class="setting-label" for="altClickEnabled">
+            Enable Alt-Click Filtering
+          </label>
+          <div class="setting-control">
+            <input type="checkbox" id="altClickEnabled">
+            <span class="setting-description">
+              Hold Alt key and click on sender/recipient/subject columns to filter
+            </span>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <label class="setting-label" for="defaultFilterType">
+            Default Filter Type
+          </label>
+          <div class="setting-control">
+            <select id="defaultFilterType">
+              <option value="sender">Sender</option>
+              <option value="recipient">Recipient</option>
+              <option value="subject">Subject</option>
+            </select>
+            <span class="setting-description">
+              Which filter to use when no specific type is selected
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Context Menu Settings -->
+      <section class="settings-section">
+        <h2>Context Menus</h2>
+
+        <div class="setting-row">
+          <label class="setting-label">Show Menu Items</label>
+          <div class="setting-control">
+            <label class="checkbox-label">
+              <input type="checkbox" id="showSenderMenu">
+              <span>Filter by Sender</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="showSenderEmailMenu">
+              <span>Filter by Sender Email</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="showRecipientMenu">
+              <span>Filter by Recipient</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="showRecipientsMenu">
+              <span>Filter by Recipients</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="showSubjectMenu">
+              <span>Filter by Subject</span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Debug Settings -->
+      <section class="settings-section">
+        <h2>Debug</h2>
+
+        <div class="setting-row">
+          <label class="setting-label" for="debugMode">
+            Debug Mode
+          </label>
+          <div class="setting-control">
+            <input type="checkbox" id="debugMode">
+            <span class="setting-description">
+              Enable detailed logging for troubleshooting
+            </span>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <label class="setting-label" for="logLevel">
+            Log Level
+          </label>
+          <div class="setting-control">
+            <select id="logLevel">
+              <option value="DEBUG">Debug</option>
+              <option value="INFO">Info</option>
+              <option value="WARN">Warning (Recommended)</option>
+              <option value="ERROR">Error Only</option>
+            </select>
+            <span class="setting-description">
+              Amount of logging information
+            </span>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <label class="setting-label" for="showNotifications">
+            Show Notifications
+          </label>
+          <div class="setting-control">
+            <input type="checkbox" id="showNotifications">
+            <span class="setting-description">
+              Show error and warning notifications
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filter History Settings -->
+      <section class="settings-section">
+        <h2>Filter History</h2>
+
+        <div class="setting-row">
+          <label class="setting-label" for="filterHistoryEnabled">
+            Save Filter History
+          </label>
+          <div class="setting-control">
+            <input type="checkbox" id="filterHistoryEnabled">
+            <span class="setting-description">
+              Remember recent filters for quick reapplication
+            </span>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <label class="setting-label" for="maxFilterHistory">
+            Maximum History Size
+          </label>
+          <div class="setting-control">
+            <input type="number" id="maxFilterHistory" min="1" max="100" value="50">
+            <span class="setting-description">
+              Maximum number of filters to remember (1-100)
+            </span>
+          </div>
+        </div>
+
+        <div class="setting-row">
+          <label class="setting-label"></label>
+          <div class="setting-control">
+            <button id="clearFilterHistory" class="button button-danger">
+              Clear History
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section class="settings-section">
+        <h2>About</h2>
+
+        <div class="setting-row">
+          <div class="about-info">
+            <p><strong>Version:</strong> <span id="extensionVersion">Loading...</span></p>
+            <p><strong>Compatibility:</strong> Thunderbird 115.0 - 140.x</p>
+            <p>
+              <strong>License:</strong> ISC<br>
+              <strong>Source:</strong>
+              <a href="https://github.com/codecide/QuickFilterBy" target="_blank" rel="noopener noreferrer">
+                GitHub Repository
+              </a>
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="actions">
+      <button id="saveButton" class="button button-primary">
+        Save Settings
+      </button>
+      <button id="resetButton" class="button button-secondary">
+        Reset to Defaults
+      </button>
+    </footer>
+  </div>
+
+  <!-- Notification container -->
+  <div id="notificationContainer"></div>
+
+  <script src="options.js"></script>
+</body>
+</html>
