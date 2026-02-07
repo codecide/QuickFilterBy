@@ -731,6 +731,16 @@
 ## Phase 3: Testing & CI/CD (Weeks 7-10)
 
 ### 3.1 Unit Tests [MEDIUM] (20h)
+**Status**: IN PROGRESS (8 hours remaining)
+
+**Time Spent**: 12 hours
+
+**Progress**: 60% complete
+- Completed: features.js (65 tests, 93.68% coverage) ✅
+- Completed: dom.js (65 tests, 91.42% coverage) ✅
+- In Progress: settings.js (75.51% coverage, 17 tests failing due to module state)
+- Remaining: health.js, background.js, implementation.js (0% coverage)
+- Overall: 44.79% coverage (target: 80%)
 
 - [x] 3.1.1 Set up testing framework
   - Install Jest: `npm install --save-dev jest @types/jest @jest/globals`
@@ -773,6 +783,26 @@
   - Test API availability
   - Test assertions
   - Cover all functions with tests
+  - Status: COMPLETE - 58 tests, 97.36% coverage
+
+- [x] 3.1.5b Write unit tests for src/utils/features.js
+  - Test feature flag constants
+  - Test detectAvailableFeatures function
+  - Test isFeatureAvailable function
+  - Test isFeatureEnabled function
+  - Test enableFeature function
+  - Test disableFeature function
+  - Test toggleFeature function
+  - Test recordFeatureFailure function
+  - Test resetFeatureFailures function
+  - Test getAllFeatureStates function
+  - Test getFeatureState function
+  - Test withFeature function
+  - Test withFeatureAsync function
+  - Test init function
+  - Mock browser APIs
+  - Cover all functions
+  - Status: COMPLETE - 65 tests, 93.68% coverage
 
 - [ ] 3.1.6 Write unit tests for src/utils/version.js
   - Test TB version detection
@@ -784,7 +814,7 @@
   - Cover all functions
   - Status: 95 tests, some tests need fixes
 
-- [ ] 3.1.7 Write unit tests for src/utils/dom.js
+- [x] 3.1.7 Write unit tests for src/utils/dom.js
   - Test DOM element lookup with retries
   - Test column name discovery
   - Test column caching
@@ -792,6 +822,7 @@
   - Test cleanup utilities
   - Mock DOM API
   - Cover all functions
+  - Status: COMPLETE - 65 tests created, 91.42% coverage
 
 - [x] 3.1.8 Write unit tests for src/utils/logger.js
   - Test log level functions
