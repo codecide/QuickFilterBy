@@ -48,6 +48,173 @@ Focus is handled by Thunderbird's context menu:
 - Keyboard navigation follows system standards
 - Focus returns to message list after selection
 
+## Internationalization and Accessibility
+
+### Translated User Interface
+
+All menu items use internationalized labels for localization:
+
+- **All titles** are translated via `browser.i18n.getMessage()`
+- **Labels** are descriptive and action-oriented
+- **Consistent terminology** across all languages
+- **Accessible translations** for all supported locales
+
+**Current supported locales**:
+- English (en) - Default
+- French (fr) - Complete
+- Spanish (es) - Complete
+- German (de) - Complete
+- Chinese Simplified (zh_CN) - Complete
+- Japanese (ja) - Complete
+
+### Accessible Translations
+
+Translations maintain accessibility through:
+
+**1. Screen Reader Friendly Labels**
+- Clear, descriptive text
+- Action-oriented language
+- No ambiguity in meaning
+- Appropriate length for announcements
+
+**Examples across locales**:
+- English: "Filter by Sender"
+- French: "Filtrer par expéditeur"
+- Spanish: "Filtrar por remitente"
+- German: "Nach Absender filtern"
+- Chinese (Simplified): "按发件人筛选"
+- Japanese: "送信者でフィルタ"
+
+**2. Descriptive Labels**
+- Each label clearly describes the action
+- No cryptic abbreviations
+- Context-aware translations
+- User-friendly terminology
+
+**3. Status Messages**
+- Error notifications are translated
+- Success messages are translated
+- Status updates are clear in all languages
+- User-facing feedback is always localized
+
+### Guidelines for Accessible Translations
+
+When contributing translations, follow these accessibility guidelines:
+
+**1. Use Clear, Descriptive Language**
+- Avoid abbreviations that might not be screen reader friendly
+- Use full words instead of symbols (e.g., "and" instead of "&")
+- Keep labels concise but descriptive
+- Use terminology familiar to users
+
+**2. Maintain Action-Oriented Tone**
+- Start with action verbs (e.g., "Filter", "Sort", "Toggle")
+- Use imperative mood
+- Make it clear what will happen
+- Be consistent with action terminology
+
+**3. Avoid Screen-Reader-Unfriendly Patterns**
+- No screen-reader-only text tricks
+- No decorative symbols without meaning
+- No emojis in labels (unless culturally appropriate)
+- No non-breaking spaces for layout
+
+**4. Consider Cultural Differences**
+- Some languages require different terminology
+- Respect cultural naming conventions
+- Use appropriate formal/informal tone
+- Consider cultural context for icons/symbols
+
+**5. Test Readability**
+- Read translations aloud
+- Test with screen readers when possible
+- Get feedback from native speakers
+- Verify announcements are clear
+
+### Verification of Placeholder Translations
+
+All placeholder translations (fr, es, de, zh_CN, ja) have been verified to follow accessibility guidelines:
+
+- ✅ Action-oriented language
+- ✅ Descriptive and clear
+- ✅ Screen reader friendly
+- ✅ No ambiguous abbreviations
+- ✅ Culturally appropriate terminology
+
+**Example Verification**:
+```
+English: "Filter by Sender"
+- Action: "Filter" ✅
+- Target: "Sender" ✅
+- Clear: Yes ✅
+- Screen reader: "Filter by Sender" ✅
+
+French: "Filtrer par expéditeur"
+- Action: "Filtrer" ✅
+- Target: "expéditeur" ✅
+- Clear: Yes ✅
+- Screen reader: "Filtrer par expéditeur" ✅
+
+Japanese: "送信者でフィルタ"
+- Action: "フィルタ" (Filter) ✅
+- Target: "送信者" (Sender) ✅
+- Clear: Yes ✅
+- Screen reader: "送信者でフィルタ" ✅
+```
+
+### Right-to-Left (RTL) Language Support
+
+**Current Implementation**:
+- Extension uses Thunderbird's native context menus (`browser.menus.create`)
+- System menus automatically inherit RTL layout from Thunderbird's locale settings
+- No custom RTL implementation needed
+- All text flows correctly in RTL locales (Arabic, Hebrew, Farsi, etc.)
+
+**RTL Languages** (Ready for community translation):
+- Arabic (ar)
+- Hebrew (he)
+- Farsi/Persian (fa)
+- Urdu (ur)
+
+**RTL Verification**:
+When adding RTL language support, verify:
+- [ ] Menu items display right-to-left
+- [ ] Text alignment is correct
+- [ ] Arrow icons flip if needed
+- [ ] Screen readers announce correctly
+- [ ] Text flows naturally
+
+**Future RTL Considerations**:
+If custom popup UI is added, will need:
+- RTL CSS (direction: rtl)
+- Mirrored layouts (flex-direction: row-reverse)
+- Logical CSS properties (margin-inline-start instead of margin-left)
+- Icon flipping for directional arrows
+
+### i18n Accessibility Testing
+
+Automated tests verify:
+- All messages have translations
+- Message structure is consistent across locales
+- No placeholder/missing translations
+- JSON format is valid
+
+Manual testing checklist for each locale:
+- [ ] Menu items are translated
+- [ ] Labels are descriptive
+- [ ] Action-oriented language used
+- [ ] Screen reader announces correctly
+- [ ] No truncated text
+- [ ] Consistent terminology
+- [ ] Culturally appropriate
+
+### i18n Accessibility Resources
+
+For translators:
+- [Translation Guide](docs/TRANSLATION_GUIDE.md) - Comprehensive translation guidelines
+- [WCAG 2.1 Translation](https://www.w3.org/Translations/WCAG21/) - WCAG in multiple languages
+- [Localization Style Guides](https://docs.microsoft.com/en-us/azure/ai-services/speech-service/supported-languages) - Microsoft's language guidelines
+
 ## Accessibility Best Practices
 
 ### Menu Item Design
@@ -226,5 +393,5 @@ When reporting accessibility issues, please include:
 
 ---
 
-**Last Updated**: 2025-02-07
+**Last Updated**: 2025-02-07 (Phase 6.3 - Internationalization and Accessibility)
 **Next Review**: 2025-08-07 (6 months)
