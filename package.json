@@ -6,8 +6,8 @@
   "directories": {
     "doc": "docs"
   },
-  "scripts": {
-    "build": "npm run clean && mkdir -p dist && zip -r dist/QuickFilterBy.xpi *.js *.json _locales api src options -x *.DS_Store",
+    "scripts": {
+    "build": "npm run clean && mkdir -p dist && zip -r dist/QuickFilterBy.xpi background.js manifest.json _locales api src options -x '*.DS_Store' '*.test.js' 'test/*' 'node_modules/*' 'coverage/*' 'docs/*' 'dist/*' '.git/*'",
     "clean": "rm -rf dist",
     "install": "npm run build",
     "checksum": "sha256sum dist/QuickFilterBy.xpi > dist/QuickFilterBy.xpi.sha256",
