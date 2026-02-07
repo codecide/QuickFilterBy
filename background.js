@@ -376,17 +376,18 @@ async function filterByTags(tags) {
     ErrorUtils.validateType(tags, 'array');
     ErrorUtils.validateArrayElements(tags, 'string');
 
-    console.log('[Tag Filter] Attempting to filter by tags:', tags);
-    console.log('[Tag Filter] Tags array type:', typeof tags, 'length:', tags.length);
-    console.log('[Tag Filter] Tags being used:', tags);
-    console.log('[Tag Filter] Calling setQuickFilter with:', { mode: "or", tags: tags });
-
-    await browser.mailTabs.setQuickFilter({
-      mode: "or", // Show messages with ANY of the selected tags
-      tags: tags
+    // Convert array of tag strings to TagsDetail format required by setQuickFilter
+    // Input: ["test", "important"]
+    // Output: {mode: "any", tags: {"test": true, "important": true}}
+    const tagsObject = {};
+    tags.forEach(tag => {
+      tagsObject[tag] = true;
     });
 
-    console.log('[Tag Filter] setQuickFilter completed successfully');
+    await browser.mailTabs.setQuickFilter({
+      mode: "any", // Show messages with ANY of the selected tags
+      tags: tagsObject
+    });
   } catch (error) {
     console.error('[Tag Filter] Error:', error);
     ErrorUtils.logError(error, { context: 'tag filter', tags });
