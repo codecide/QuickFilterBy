@@ -152,6 +152,16 @@ describe('background.js - Script Structure', () => {
     expect(backgroundScriptContent).toContain('getLastDaysRange(30)');
   });
 
+  it('should create tags-this-message menu item', () => {
+    expect(backgroundScriptContent).toContain('id: "tags-this-message"');
+    expect(backgroundScriptContent).toContain('filterByTags');
+  });
+
+  it('should create tags-placeholder menu item', () => {
+    expect(backgroundScriptContent).toContain('id: "tags-placeholder"');
+    expect(backgroundScriptContent).toContain('browser.messages.tags.list');
+  });
+
   it('should register onShown listener', () => {
     expect(backgroundScriptContent).toContain('browser.menus.onShown.addListener');
   });

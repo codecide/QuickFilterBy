@@ -43,5 +43,23 @@
   },
   "dateNoMessages": {
     "message": "No messages found in selected date range"
+  },
+  "tags": {
+    "message": "Filter by Tag"
+  },
+  "tagsThisMessage": {
+    "message": "Filter by This Message's Tags"
+  },
+  "tagsChooseTags": {
+    "message": "Choose Tags..."
+  },
+  "tagsNoTags": {
+    "message": "No tags defined in Thunderbird"
+  },
+  "tagsNoMessages": {
+    "message": "No messages found with selected tags"
+  },
+  "tagSeparator": {
+    "message": "-"
   }
 }

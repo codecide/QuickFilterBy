@@ -7,6 +7,7 @@
  * - Alt-click event handling for quick filtering
  * - Tab initialization for all mail tabs
  * - Date-based message filtering
+ * - Tag-based message filtering
  *
  * @file background.js
  * @version 14.0.1
@@ -372,6 +373,150 @@ browser.menus.create({
 });
 
 // ============================================================================
+// TAG FILTERING
+// ============================================================================
+
+/**
+ * Filter messages by one or more tags.
+ * Uses setQuickFilter with tags parameter.
+ *
+ * @param {Array<string>} tags - Array of tag keys (e.g., ["$label1", "$label2"])
+ * @returns {Promise<void>}
+ */
+async function filterByTags(tags) {
+  try {
+    ErrorUtils.validateNotNull(tags, 'tags');
+    ErrorUtils.validateType(tags, 'array');
+
+    if (tags.length === 0) {
+      console.warn('[Tag Filter] No tags provided, clearing tag filter');
+      // Clear tag filter by setting empty tags array
+      await browser.mailTabs.setQuickFilter({
+        tags: {
+          mode: "or",
+          tags: []
+        }
+      });
+      return;
+    }
+
+    await browser.mailTabs.setQuickFilter({
+      tags: {
+        mode: "or", // Show messages with ANY of the selected tags
+        tags: tags
+      }
+    });
+    console.log('[Tag Filter] Filtered by tags:', tags);
+  } catch (error) {
+    ErrorUtils.logError(error, { context: 'tag filter', tags });
+    await ErrorUtils.showErrorNotification(
+      'Filter Failed',
+      'Could not filter by tags. Please try again.',
+      { type: 'error' }
+    );
+  }
+}
+
+/**
+ * Create context menu separator for tag filters.
+ */
+browser.menus.create({
+  type: "separator",
+  contexts: ["message_list"],
+});
+
+/**
+ * Create context menu item for filtering by this message's tags.
+ * Filters messages to show all messages with the same tags as the selected message.
+ */
+browser.menus.create({
+  id: "tags-this-message",
+  title: browser.i18n.getMessage("tagsThisMessage"),
+  contexts: ["message_list"],
+  async onclick(info) {
+    try {
+      ErrorUtils.validateNotNull(info, 'info');
+      ErrorUtils.validateNotNull(info.selectedMessages, 'info.selectedMessages');
+
+      const message = info.selectedMessages.messages[0];
+      ErrorUtils.validateNotNull(message, 'message');
+
+      // Get tags from the selected message
+      const tags = message.tags || [];
+
+      if (tags.length === 0) {
+        await ErrorUtils.showErrorNotification(
+          'No Tags',
+          'This message has no tags. Please add tags to the message first.',
+          { type: 'info' }
+        );
+        return;
+      }
+
+      await filterByTags(tags);
+    } catch (error) {
+      ErrorUtils.logError(error, { context: 'tags-this-message menu item' });
+      await ErrorUtils.showErrorNotification(
+        'Filter Failed',
+        'Could not filter by this message\'s tags. Please try again.',
+        { type: 'error' }
+      );
+    }
+  },
+});
+
+/**
+ * Create context menu item for filtering by specific tag (placeholder).
+ * This will be dynamically populated with available tags.
+ * Note: Full tag submenu implementation requires tag caching and dynamic menu building.
+ * This is a simplified version that filters by a predefined tag or shows error.
+ */
+browser.menus.create({
+  id: "tags-placeholder",
+  title: browser.i18n.getMessage("tagsChooseTags"),
+  contexts: ["message_list"],
+  async onclick(info) {
+    try {
+      // Try to get all tags
+      let tags;
+      try {
+        tags = await browser.messages.tags.list();
+      } catch (e) {
+        // Tags API might not be available
+        await ErrorUtils.showErrorNotification(
+          'Tags Not Available',
+          'Tag filtering requires Thunderbird 115+ with messagesRead permission.',
+          { type: 'error' }
+        );
+        return;
+      }
+
+      if (!tags || tags.length === 0) {
+        await ErrorUtils.showErrorNotification(
+          browser.i18n.getMessage("tagsNoTags"),
+          'Please create tags in Thunderbird first: Tools > Message Tags.',
+          { type: 'info' }
+        );
+        return;
+      }
+
+      // For now, just filter by the first tag as a demo
+      // Full implementation would show a popup UI with all tags
+      const firstTag = tags[0];
+      await filterByTags([firstTag.key]);
+
+    } catch (error) {
+      ErrorUtils.logError(error, { context: 'tags-choose-tags menu item' });
+      await ErrorUtils.showErrorNotification(
+        'Filter Failed',
+        'Could not access tags. Please try again.',
+        { type: 'error' }
+      );
+    }
+  },
+});
+
+// ============================================================================
 // MENU VISIBILITY HANDLER
 // ============================================================================
 
@@ -392,7 +537,8 @@ browser.menus.onShown.addListener((info) => {
     // Update visibility for all menu items
     const menuIds = [
       "sender", "senderEmail", "recipient", "recipients", "subject",
-      "date-today", "date-this-week", "date-this-month", "date-last-7days", "date-last-30days"
+      "date-today", "date-this-week", "date-this-month", "date-last-7days", "date-last-30days",
+      "tags-this-message", "tags-placeholder"
     ];
     for (const menuId of menuIds) {
       browser.menus.update(menuId, { visible: oneMessage });
