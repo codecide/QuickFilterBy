@@ -12,18 +12,32 @@
     "install": "npm run build",
     "checksum": "sha256sum dist/QuickFilterBy.xpi > dist/QuickFilterBy.xpi.sha256",
     "lint": "echo \"Linting not yet configured\"",
-    "test": "echo \"Tests not yet configured\""
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:verbose": "jest --verbose"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/codecide/QuickFilterBy.git"
   },
-  "keywords": ["thunderbird", "extension", "quick-filter", "email", "filter"],
+  "keywords": [
+    "thunderbird",
+    "extension",
+    "quick-filter",
+    "email",
+    "filter"
+  ],
   "author": "QuickFilterBy Contributors",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
     "url": "https://github.com/codecide/QuickFilterBy/issues"
   },
-  "homepage": "https://github.com/codecide/QuickFilterBy#readme"
+  "homepage": "https://github.com/codecide/QuickFilterBy#readme",
+  "devDependencies": {
+    "@jest/globals": "^30.2.0",
+    "@types/jest": "^30.0.0",
+    "jest": "^30.2.0"
+  }
 }
