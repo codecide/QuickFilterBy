@@ -530,47 +530,52 @@ async function filterByAttachmentStatus(hasAttachment) {
 }
 
 /**
- * Create context menu separator for attachment filters.
+ * ATTACHMENT FILTERING - DISABLED
+ *
+ * Thunderbird's Quick Filter API (browser.mailTabs.setQuickFilter) does NOT support
+ * attachment filtering via the WebExtension API. The built-in Quick Filter bar
+ * has an attachment toggle, but the API doesn't expose a parameter for it.
+ *
+ * This is another API limitation, similar to date filtering.
+ *
+ * Helper function filterByAttachmentStatus() is kept for future implementation
+ * if/when the API is updated.
+ *
+ * See: https://webextension-api.thunderbird.net/mailTabs.html#method-setQuickFilter
  */
-browser.menus.create({
-  type: "separator",
-  contexts: ["message_list"],
-});
 
-/**
- * Create context menu for attachment filters.
- */
-browser.menus.create({
-  id: "attachment-filter-menu",
-  title: browser.i18n.getMessage("attachment"),
-  contexts: ["message_list"],
-});
-
-/**
- * Create context menu item for filtering messages with attachments.
- */
-browser.menus.create({
-  id: "attachment-has",
-  title: browser.i18n.getMessage("attachmentHas"),
-  contexts: ["message_list"],
-  parentId: "attachment-filter-menu",
-  async onclick(info) {
-    await filterByAttachmentStatus(true);
-  },
-});
-
-/**
- * Create context menu item for filtering messages without attachments.
- */
-browser.menus.create({
-  id: "attachment-none",
-  title: browser.i18n.getMessage("attachmentNone"),
-  contexts: ["message_list"],
-  parentId: "attachment-filter-menu",
-  async onclick(info) {
-    await filterByAttachmentStatus(false);
-  },
-});
+// Attachment filter menu items are disabled due to API limitation
+// TODO: Re-enable when browser.mailTabs.setQuickFilter supports attachment parameter
+// browser.menus.create({
+//   type: "separator",
+//   contexts: ["message_list"],
+// });
+//
+// browser.menus.create({
+//   id: "attachment-filter-menu",
+//   title: browser.i18n.getMessage("attachment"),
+//   contexts: ["message_list"],
+// });
+//
+// browser.menus.create({
+//   id: "attachment-has",
+//   title: browser.i18n.getMessage("attachmentHas"),
+//   contexts: ["message_list"],
+//   parentId: "attachment-filter-menu",
+//   async onclick(info) {
+//     await filterByAttachmentStatus(true);
+//   },
+// });
+//
+// browser.menus.create({
+//   id: "attachment-none",
+//   title: browser.i18n.getMessage("attachmentNone"),
+//   contexts: ["message_list"],
+//   parentId: "attachment-filter-menu",
+//   async onclick(info) {
+//     await filterByAttachmentStatus(false);
+//   },
+// });
 
 // ============================================================================
 // READ/UNREAD STATUS FILTERING
@@ -663,11 +668,10 @@ browser.menus.onShown.addListener((info) => {
     const oneMessage = info.selectedMessages && info.selectedMessages.messages.length == 1;
 
     // Update visibility for all menu items
-    // Note: Date filter menu items are disabled due to API limitation
+    // Note: Date and attachment filter menu items are disabled due to API limitations
     const menuIds = [
       "sender", "senderEmail", "recipient", "recipients", "subject",
       "tags-this-message", "tags-placeholder",
-      "attachment-filter-menu", "attachment-has", "attachment-none",
       "read-status-menu", "read-unread", "read-read"
     ];
     for (const menuId of menuIds) {

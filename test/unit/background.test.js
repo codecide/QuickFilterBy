@@ -169,20 +169,23 @@ describe('background.js - Script Structure', () => {
     expect(backgroundScriptContent).toContain('browser.messages.tags.list');
   });
 
-  it('should create attachment-filter-menu menu item', () => {
-    expect(backgroundScriptContent).toContain('id: "attachment-filter-menu"');
-    expect(backgroundScriptContent).toContain('filterByAttachmentStatus');
-  });
-
-  it('should create attachment-has menu item', () => {
-    expect(backgroundScriptContent).toContain('id: "attachment-has"');
-    expect(backgroundScriptContent).toContain('await filterByAttachmentStatus(true)');
-  });
-
-  it('should create attachment-none menu item', () => {
-    expect(backgroundScriptContent).toContain('id: "attachment-none"');
-    expect(backgroundScriptContent).toContain('await filterByAttachmentStatus(false)');
-  });
+  // Attachment filtering tests are disabled - Quick Filter API doesn't support attachment filtering
+  // TODO: Re-enable when browser.mailTabs.setQuickFilter supports attachment parameter
+  //
+  // it('should create attachment-filter-menu menu item', () => {
+  //   expect(backgroundScriptContent).toContain('id: "attachment-filter-menu"');
+  //   expect(backgroundScriptContent).toContain('filterByAttachmentStatus');
+  // });
+  //
+  // it('should create attachment-has menu item', () => {
+  //   expect(backgroundScriptContent).toContain('id: "attachment-has"');
+  //   expect(backgroundScriptContent).toContain('await filterByAttachmentStatus(true)');
+  // });
+  //
+  // it('should create attachment-none menu item', () => {
+  //   expect(backgroundScriptContent).toContain('id: "attachment-none"');
+  //   expect(backgroundScriptContent).toContain('await filterByAttachmentStatus(false)');
+  // });
 
   it('should create read-status-menu menu item', () => {
     expect(backgroundScriptContent).toContain('id: "read-status-menu"');
