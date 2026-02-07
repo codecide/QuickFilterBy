@@ -9,6 +9,7 @@
  * - Date-based message filtering
  * - Tag-based message filtering
  * - Attachment status filtering
+ * - Read status filtering
  *
  * @file background.js
  * @version 14.0.1
@@ -590,6 +591,78 @@ browser.menus.create({
 });
 
 // ============================================================================
+// READ/UNREAD STATUS FILTERING
+// ============================================================================
+
+/**
+ * Filter messages by read status (unread or read).
+ * Uses setQuickFilter with unread parameter.
+ *
+ * @param {boolean} isUnread - true for unread, false for read
+ * @returns {Promise<void>}
+ */
+async function filterByReadStatus(isUnread) {
+  try {
+    ErrorUtils.validateType(isUnread, 'boolean');
+
+    await browser.mailTabs.setQuickFilter({
+      unread: isUnread
+    });
+    console.log('[Read Status Filter] Filtered by read status:', isUnread ? 'unread' : 'read');
+  } catch (error) {
+    ErrorUtils.logError(error, { context: 'read status filter', isUnread });
+    await ErrorUtils.showErrorNotification(
+      browser.i18n.getMessage('readFailed'),
+      error.message,
+      { type: 'error' }
+    );
+  }
+}
+
+/**
+ * Create context menu separator for read status filters.
+ */
+browser.menus.create({
+  type: "separator",
+  contexts: ["message_list"],
+});
+
+/**
+ * Create context menu for read status filters.
+ */
+browser.menus.create({
+  id: "read-status-menu",
+  title: browser.i18n.getMessage("readStatus"),
+  contexts: ["message_list"],
+});
+
+/**
+ * Create context menu item for filtering unread messages.
+ */
+browser.menus.create({
+  id: "read-unread",
+  title: browser.i18n.getMessage("readUnread"),
+  contexts: ["message_list"],
+  parentId: "read-status-menu",
+  async onclick(info) {
+    await filterByReadStatus(true);
+  },
+});
+
+/**
+ * Create context menu item for filtering read messages.
+ */
+browser.menus.create({
+  id: "read-read",
+  title: browser.i18n.getMessage("readRead"),
+  contexts: ["message_list"],
+  parentId: "read-status-menu",
+  async onclick(info) {
+    await filterByReadStatus(false);
+  },
+});
+
+// ============================================================================
 // MENU VISIBILITY HANDLER
 // ============================================================================
 
@@ -612,7 +685,8 @@ browser.menus.onShown.addListener((info) => {
       "sender", "senderEmail", "recipient", "recipients", "subject",
       "date-today", "date-this-week", "date-this-month", "date-last-7days", "date-last-30days",
       "tags-this-message", "tags-placeholder",
-      "attachment-filter-menu", "attachment-has", "attachment-none"
+      "attachment-filter-menu", "attachment-has", "attachment-none",
+      "read-status-menu", "read-unread", "read-read"
     ];
     for (const menuId of menuIds) {
       browser.menus.update(menuId, { visible: oneMessage });

@@ -6,6 +6,10 @@
  * - Menu item click handlers
  * - Alt-click event handling
  * - Tab initialization
+ * - Date-based filtering
+ * - Tag-based filtering
+ * - Attachment status filtering
+ * - Read status filtering
  * - Main function
  *
  * Note: background.js is a standalone script that runs in browser context.
@@ -175,6 +179,21 @@ describe('background.js - Script Structure', () => {
   it('should create attachment-none menu item', () => {
     expect(backgroundScriptContent).toContain('id: "attachment-none"');
     expect(backgroundScriptContent).toContain('await filterByAttachmentStatus(false)');
+  });
+
+  it('should create read-status-menu menu item', () => {
+    expect(backgroundScriptContent).toContain('id: "read-status-menu"');
+    expect(backgroundScriptContent).toContain('filterByReadStatus');
+  });
+
+  it('should create read-unread menu item', () => {
+    expect(backgroundScriptContent).toContain('id: "read-unread"');
+    expect(backgroundScriptContent).toContain('await filterByReadStatus(true)');
+  });
+
+  it('should create read-read menu item', () => {
+    expect(backgroundScriptContent).toContain('id: "read-read"');
+    expect(backgroundScriptContent).toContain('await filterByReadStatus(false)');
   });
 
   it('should register onShown listener', () => {

@@ -73,5 +73,20 @@
   },
   "attachmentNoMessages": {
     "message": "No messages found with selected attachment filter"
+  },
+  "readStatus": {
+    "message": "Filter by Read Status"
+  },
+  "readUnread": {
+    "message": "Filter by Unread"
+  },
+  "readRead": {
+    "message": "Filter by Read"
+  },
+  "readNoMessages": {
+    "message": "No messages selected"
+  },
+  "readFailed": {
+    "message": "Failed to filter by read status"
   }
 }
