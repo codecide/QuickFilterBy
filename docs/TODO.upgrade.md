@@ -12,8 +12,8 @@
 - [x] **Phase 2**: Robustness & Stability (40h) ✅ COMPLETED
 - [x] **Phase 3**: Testing & CI/CD (68h) ✅ COMPLETED
 - [x] **Phase 4**: Feature Expansion (70h) ✅ COMPLETED (core filtering features)
-- [ ] **Phase 5**: Modernization (108h) 🔄 IN PROGRESS (5.4 starting)
-- [ ] **Phase 6**: Internationalization (34h)
+- [x] **Phase 5**: Modernization (108h) ✅ COMPLETED (security, accessibility)
+- [ ] **Phase 6**: Internationalization (34h) 🔄 IN PROGRESS (6.1 starting)
 - [ ] **Phase 7**: Documentation & Community (24h+)
 
 ---
