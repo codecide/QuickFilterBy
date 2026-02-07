@@ -131,30 +131,33 @@ describe('background.js - Script Structure', () => {
     expect(backgroundScriptContent).toContain('contexts: ["message_list"]');
   });
 
-  it('should create date-today menu item', () => {
-    expect(backgroundScriptContent).toContain('id: "date-today"');
-    expect(backgroundScriptContent).toContain('filterByDateRange');
-  });
-
-  it('should create date-this-week menu item', () => {
-    expect(backgroundScriptContent).toContain('id: "date-this-week"');
-    expect(backgroundScriptContent).toContain('getThisWeekRange');
-  });
-
-  it('should create date-this-month menu item', () => {
-    expect(backgroundScriptContent).toContain('id: "date-this-month"');
-    expect(backgroundScriptContent).toContain('getThisMonthRange');
-  });
-
-  it('should create date-last-7days menu item', () => {
-    expect(backgroundScriptContent).toContain('id: "date-last-7days"');
-    expect(backgroundScriptContent).toContain('getLastDaysRange(7)');
-  });
-
-  it('should create date-last-30days menu item', () => {
-    expect(backgroundScriptContent).toContain('id: "date-last-30days"');
-    expect(backgroundScriptContent).toContain('getLastDaysRange(30)');
-  });
+  // Date filtering tests are disabled - Quick Filter API doesn't support date filtering
+  // TODO: Re-enable when custom date picker UI is implemented
+  //
+  // it('should create date-today menu item', () => {
+  //   expect(backgroundScriptContent).toContain('id: "date-today"');
+  //   expect(backgroundScriptContent).toContain('filterByDateRange');
+  // });
+  //
+  // it('should create date-this-week menu item', () => {
+  //   expect(backgroundScriptContent).toContain('id: "date-this-week"');
+  //   expect(backgroundScriptContent).toContain('getThisWeekRange');
+  // });
+  //
+  // it('should create date-this-month menu item', () => {
+  //   expect(backgroundScriptContent).toContain('id: "date-this-month"');
+  //   expect(backgroundScriptContent).toContain('getThisMonthRange');
+  // });
+  //
+  // it('should create date-last-7days menu item', () => {
+  //   expect(backgroundScriptContent).toContain('id: "date-last-7days"');
+  //   expect(backgroundScriptContent).toContain('getLastDaysRange(7)');
+  // });
+  //
+  // it('should create date-last-30days menu item', () => {
+  //   expect(backgroundScriptContent).toContain('id: "date-last-30days"');
+  //   expect(backgroundScriptContent).toContain('getLastDaysRange(30)');
+  // });
 
   it('should create tags-this-message menu item', () => {
     expect(backgroundScriptContent).toContain('id: "tags-this-message"');

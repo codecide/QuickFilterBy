@@ -315,7 +315,7 @@ function getLastDaysRange(days) {
 }
 
 /**
- * Create context menu separator for date filters.
+ * Create context menu separator.
  */
 browser.menus.create({
   type: "separator",
@@ -323,57 +323,38 @@ browser.menus.create({
 });
 
 /**
- * Create context menu for date filters.
+ * DATE FILTERING - DISABLED
+ *
+ * Thunderbird's Quick Filter API (browser.mailTabs.setQuickFilter) does NOT support
+ * date filtering. The API only supports:
+ * - text filtering (author, recipients, subject, body)
+ * - tag filtering
+ * - flagged status
+ * - read status
+ * - attachment status
+ *
+ * Date filtering would require a custom UI to display filtered messages,
+ * which is complex to implement. For now, date filters are disabled.
+ *
+ * Helper functions (getTodayRange, getThisWeekRange, etc.) are kept
+ * for future implementation when a custom date picker UI is created.
+ *
+ * See: https://webextension-api.thunderbird.net/mailTabs.html#setQuickFilter
  */
-browser.menus.create({
-  id: "date-today",
-  title: browser.i18n.getMessage("dateToday"),
-  contexts: ["message_list"],
-  async onclick(info) {
-    const { start, end } = getTodayRange();
-    await filterByDateRange(start, end);
-  },
-});
 
-browser.menus.create({
-  id: "date-this-week",
-  title: browser.i18n.getMessage("dateThisWeek"),
-  contexts: ["message_list"],
-  async onclick(info) {
-    const { start, end } = getThisWeekRange();
-    await filterByDateRange(start, end);
-  },
-});
-
-browser.menus.create({
-  id: "date-this-month",
-  title: browser.i18n.getMessage("dateThisMonth"),
-  contexts: ["message_list"],
-  async onclick(info) {
-    const { start, end } = getThisMonthRange();
-    await filterByDateRange(start, end);
-  },
-});
-
-browser.menus.create({
-  id: "date-last-7days",
-  title: browser.i18n.getMessage("dateLast7Days"),
-  contexts: ["message_list"],
-  async onclick(info) {
-    const { start, end } = getLastDaysRange(7);
-    await filterByDateRange(start, end);
-  },
-});
-
-browser.menus.create({
-  id: "date-last-30days",
-  title: browser.i18n.getMessage("dateLast30Days"),
-  contexts: ["message_list"],
-  async onclick(info) {
-    const { start, end } = getLastDaysRange(30);
-    await filterByDateRange(start, end);
-  },
-});
+// Date filter menu items are disabled due to API limitation
+// TODO: Implement custom date picker UI for date filtering
+// browser.menus.create({
+//   id: "date-today",
+//   title: browser.i18n.getMessage("dateToday"),
+//   contexts: ["message_list"],
+//   async onclick(info) {
+//     const { start, end } = getTodayRange();
+//     await filterByDateRange(start, end);
+//   },
+// });
+//
+// ... (other date menu items similarly disabled)
 
 // ============================================================================
 // TAG FILTERING
@@ -682,9 +663,9 @@ browser.menus.onShown.addListener((info) => {
     const oneMessage = info.selectedMessages && info.selectedMessages.messages.length == 1;
 
     // Update visibility for all menu items
+    // Note: Date filter menu items are disabled due to API limitation
     const menuIds = [
       "sender", "senderEmail", "recipient", "recipients", "subject",
-      "date-today", "date-this-week", "date-this-month", "date-last-7days", "date-last-30days",
       "tags-this-message", "tags-placeholder",
       "attachment-filter-menu", "attachment-has", "attachment-none",
       "read-status-menu", "read-unread", "read-read"
