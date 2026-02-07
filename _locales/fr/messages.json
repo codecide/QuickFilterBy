@@ -1,0 +1,98 @@
+{
+  "extensionName": {
+    "message": "Quick Filter Par"
+  },
+  "extensionDescription": {
+    "message": "Une simple extension qui applique le filtre rapide en fonction des champs du message sélectionné"
+  },
+  "recipient": {
+    "message": "Premier Destinataire"
+  },
+  "recipients": {
+    "message": "Tous les Destinataires"
+  },
+  "sender": {
+    "message": "Expéditeur"
+  },
+  "senderEmail": {
+    "message": "Expéditeur (Courriel)"
+  },
+  "subject": {
+    "message": "Sujet"
+  },
+  "date": {
+    "message": "Filtrer par Date"
+  },
+  "dateToday": {
+    "message": "Filtrer par Date (Aujourd'hui)"
+  },
+  "dateThisWeek": {
+    "message": "Filtrer par Date (Cette Semaine)"
+  },
+  "dateThisMonth": {
+    "message": "Filtrer par Date (Ce Mois)"
+  },
+  "dateThisYear": {
+    "message": "Filtrer par Date (Cette Année)"
+  },
+  "dateLast7Days": {
+    "message": "Filtrer par Date (7 Derniers Jours)"
+  },
+  "dateLast30Days": {
+    "message": "Filtrer par Date (30 Derniers Jours)"
+  },
+  "dateNoMessages": {
+    "message": "Aucun message trouvé dans la plage de dates sélectionnée"
+  },
+  "tags": {
+    "message": "Filtrer par Étiquette"
+  },
+  "tagsThisMessage": {
+    "message": "Filtrer par Étiquettes de ce Message"
+  },
+  "tagsChooseTags": {
+    "message": "Choisir les Étiquettes..."
+  },
+  "tagsNoTags": {
+    "message": "Aucune étiquette définie dans Thunderbird"
+  },
+  "tagsNoMessages": {
+    "message": "Aucun message trouvé avec les étiquettes sélectionnées"
+  },
+  "tagSeparator": {
+    "message": "-"
+  },
+  "attachment": {
+    "message": "Filtrer par Pièce Jointe"
+  },
+  "attachmentHas": {
+    "message": "Filtrer par Pièce Jointe"
+  },
+  "attachmentNone": {
+    "message": "Filtrer sans Pièce Jointe"
+  },
+  "attachmentNoMessages": {
+    "message": "Aucun message trouvé avec le filtre de pièce jointe sélectionné"
+  },
+  "readStatus": {
+    "message": "Filtrer par Statut de Lecture"
+  },
+  "readUnread": {
+    "message": "Filtrer par Non Lu"
+  },
+  "readRead": {
+    "message": "Filtrer par Lu"
+  },
+  "readNoMessages": {
+    "message": "Aucun message sélectionné"
+  },
+  "readFailed": {
+    "message": "Échec du filtrage par statut de lecture"
+  },
+  "_translator_credit": {
+    "message": "French translation - [Your Name Here]"
+  },
+  "_last_updated": {
+    "message": "2025-02-07"
+  }
+}

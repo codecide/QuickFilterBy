@@ -1,0 +1,98 @@
+{
+  "extensionName": {
+    "message": "Filtro Rápido Por"
+  },
+  "extensionDescription": {
+    "message": "Una extensión simple que aplica el filtro rápido en función de los campos del mensaje seleccionado"
+  },
+  "recipient": {
+    "message": "Primer Destinatario"
+  },
+  "recipients": {
+    "message": "Todos los Destinatarios"
+  },
+  "sender": {
+    "message": "Remitente"
+  },
+  "senderEmail": {
+    "message": "Remitente (Correo Electrónico)"
+  },
+  "subject": {
+    "message": "Asunto"
+  },
+  "date": {
+    "message": "Filtrar por Fecha"
+  },
+  "dateToday": {
+    "message": "Filtrar por Fecha (Hoy)"
+  },
+  "dateThisWeek": {
+    "message": "Filtrar por Fecha (Esta Semana)"
+  },
+  "dateThisMonth": {
+    "message": "Filtrar por Fecha (Este Mes)"
+  },
+  "dateThisYear": {
+    "message": "Filtrar por Fecha (Este Año)"
+  },
+  "dateLast7Days": {
+    "message": "Filtrar por Fecha (Últimos 7 Días)"
+  },
+  "dateLast30Days": {
+    "message": "Filtrar por Fecha (Últimos 30 Días)"
+  },
+  "dateNoMessages": {
+    "message": "No se encontraron mensajes en el rango de fechas seleccionado"
+  },
+  "tags": {
+    "message": "Filtrar por Etiqueta"
+  },
+  "tagsThisMessage": {
+    "message": "Filtrar por Etiquetas de Este Mensaje"
+  },
+  "tagsChooseTags": {
+    "message": "Elegir Etiquetas..."
+  },
+  "tagsNoTags": {
+    "message": "No hay etiquetas definidas en Thunderbird"
+  },
+  "tagsNoMessages": {
+    "message": "No se encontraron mensajes con las etiquetas seleccionadas"
+  },
+  "tagSeparator": {
+    "message": "-"
+  },
+  "attachment": {
+    "message": "Filtrar por Adjunto"
+  },
+  "attachmentHas": {
+    "message": "Filtrar con Adjunto"
+  },
+  "attachmentNone": {
+    "message": "Filtrar sin Adjunto"
+  },
+  "attachmentNoMessages": {
+    "message": "No se encontraron mensajes con el filtro de adjunto seleccionado"
+  },
+  "readStatus": {
+    "message": "Filtrar por Estado de Lectura"
+  },
+  "readUnread": {
+    "message": "Filtrar por No Leído"
+  },
+  "readRead": {
+    "message": "Filtrar por Leído"
+  },
+  "readNoMessages": {
+    "message": "Ningún mensaje seleccionado"
+  },
+  "readFailed": {
+    "message": "Error al filtrar por estado de lectura"
+  },
+  "_translator_credit": {
+    "message": "Spanish translation - [Your Name Here]"
+  },
+  "_last_updated": {
+    "message": "2025-02-07"
+  }
+}

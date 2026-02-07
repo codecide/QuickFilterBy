@@ -1,0 +1,98 @@
+{
+  "extensionName": {
+    "message": "快速筛选"
+  },
+  "extensionDescription": {
+    "message": "一个简单的扩展，根据所选消息的字段应用快速筛选"
+  },
+  "recipient": {
+    "message": "第一个收件人"
+  },
+  "recipients": {
+    "message": "所有收件人"
+  },
+  "sender": {
+    "message": "发件人"
+  },
+  "senderEmail": {
+    "message": "发件人（电子邮件）"
+  },
+  "subject": {
+    "message": "主题"
+  },
+  "date": {
+    "message": "按日期筛选"
+  },
+  "dateToday": {
+    "message": "按日期筛选（今天）"
+  },
+  "dateThisWeek": {
+    "message": "按日期筛选（本周）"
+  },
+  "dateThisMonth": {
+    "message": "按日期筛选（本月）"
+  },
+  "dateThisYear": {
+    "message": "按日期筛选（今年）"
+  },
+  "dateLast7Days": {
+    "message": "按日期筛选（最近7天）"
+  },
+  "dateLast30Days": {
+    "message": "按日期筛选（最近30天）"
+  },
+  "dateNoMessages": {
+    "message": "在所选日期范围内未找到消息"
+  },
+  "tags": {
+    "message": "按标签筛选"
+  },
+  "tagsThisMessage": {
+    "message": "按此消息的标签筛选"
+  },
+  "tagsChooseTags": {
+    "message": "选择标签..."
+  },
+  "tagsNoTags": {
+    "message": "Thunderbird 中未定义标签"
+  },
+  "tagsNoMessages": {
+    "message": "未找到具有所选标签的消息"
+  },
+  "tagSeparator": {
+    "message": "-"
+  },
+  "attachment": {
+    "message": "按附件筛选"
+  },
+  "attachmentHas": {
+    "message": "筛选有附件的消息"
+  },
+  "attachmentNone": {
+    "message": "筛选无附件的消息"
+  },
+  "attachmentNoMessages": {
+    "message": "未找到具有所选附件筛选的消息"
+  },
+  "readStatus": {
+    "message": "按已读状态筛选"
+  },
+  "readUnread": {
+    "message": "筛选未读消息"
+  },
+  "readRead": {
+    "message": "筛选已读消息"
+  },
+  "readNoMessages": {
+    "message": "未选择消息"
+  },
+  "readFailed": {
+    "message": "按已读状态筛选失败"
+  },
+  "_translator_credit": {
+    "message": "中文翻译 - [您的名字]"
+  },
+  "_last_updated": {
+    "message": "2025-02-07"
+  }
+}

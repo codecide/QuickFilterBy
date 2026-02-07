@@ -1,0 +1,98 @@
+{
+  "extensionName": {
+    "message": "Quick Filter Nach"
+  },
+  "extensionDescription": {
+    "message": "Eine einfache Erweiterung, die den Schnellfilter basierend auf den Feldern der ausgewählten Nachricht anwendet"
+  },
+  "recipient": {
+    "message": "Erster Empfänger"
+  },
+  "recipients": {
+    "message": "Alle Empfänger"
+  },
+  "sender": {
+    "message": "Absender"
+  },
+  "senderEmail": {
+    "message": "Absender (E-Mail)"
+  },
+  "subject": {
+    "message": "Betreff"
+  },
+  "date": {
+    "message": "Nach Datum Filtern"
+  },
+  "dateToday": {
+    "message": "Nach Datum Filtern (Heute)"
+  },
+  "dateThisWeek": {
+    "message": "Nach Datum Filtern (Diese Woche)"
+  },
+  "dateThisMonth": {
+    "message": "Nach Datum Filtern (Dieser Monat)"
+  },
+  "dateThisYear": {
+    "message": "Nach Datum Filtern (Dieses Jahr)"
+  },
+  "dateLast7Days": {
+    "message": "Nach Datum Filtern (Letzte 7 Tage)"
+  },
+  "dateLast30Days": {
+    "message": "Nach Datum Filtern (Letzte 30 Tage)"
+  },
+  "dateNoMessages": {
+    "message": "Keine Nachrichten im ausgewählten Datumsbereich gefunden"
+  },
+  "tags": {
+    "message": "Nach Schlagwort Filtern"
+  },
+  "tagsThisMessage": {
+    "message": "Nach Schlagworten Dieser Nachricht Filtern"
+  },
+  "tagsChooseTags": {
+    "message": "Schlagwörter Auswählen..."
+  },
+  "tagsNoTags": {
+    "message": "Keine Schlagwörter in Thunderbird definiert"
+  },
+  "tagsNoMessages": {
+    "message": "Keine Nachrichten mit den ausgewählten Schlagworten gefunden"
+  },
+  "tagSeparator": {
+    "message": "-"
+  },
+  "attachment": {
+    "message": "Nach Anhang Filtern"
+  },
+  "attachmentHas": {
+    "message": "Mit Anhang Filtern"
+  },
+  "attachmentNone": {
+    "message": "Ohne Anhang Filtern"
+  },
+  "attachmentNoMessages": {
+    "message": "Keine Nachrichten mit dem ausgewählten Anhangsfilter gefunden"
+  },
+  "readStatus": {
+    "message": "Nach Lesestatus Filtern"
+  },
+  "readUnread": {
+    "message": "Nach Ungelesen Filtern"
+  },
+  "readRead": {
+    "message": "Nach Gelesen Filtern"
+  },
+  "readNoMessages": {
+    "message": "Keine Nachrichten ausgewählt"
+  },
+  "readFailed": {
+    "message": "Filtern nach Lesestatus fehlgeschlagen"
+  },
+  "_translator_credit": {
+    "message": "German translation - [Your Name Here]"
+  },
+  "_last_updated": {
+    "message": "2025-02-07"
+  }
+}

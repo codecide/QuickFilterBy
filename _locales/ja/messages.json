@@ -1,0 +1,98 @@
+{
+  "extensionName": {
+    "message": "クイックフィルタ"
+  },
+  "extensionDescription": {
+    "message": "選択したメッセージのフィールドに基づいてクイックフィルタを適用するシンプルな拡張機能"
+  },
+  "recipient": {
+    "message": "最初の受信者"
+  },
+  "recipients": {
+    "message": "すべての受信者"
+  },
+  "sender": {
+    "message": "送信者"
+  },
+  "senderEmail": {
+    "message": "送信者（メール）"
+  },
+  "subject": {
+    "message": "件名"
+  },
+  "date": {
+    "message": "日付でフィルタ"
+  },
+  "dateToday": {
+    "message": "日付でフィルタ（今日）"
+  },
+  "dateThisWeek": {
+    "message": "日付でフィルタ（今週）"
+  },
+  "dateThisMonth": {
+    "message": "日付でフィルタ（今月）"
+  },
+  "dateThisYear": {
+    "message": "日付でフィルタ（今年）"
+  },
+  "dateLast7Days": {
+    "message": "日付でフィルタ（過去7日間）"
+  },
+  "dateLast30Days": {
+    "message": "日付でフィルタ（過去30日間）"
+  },
+  "dateNoMessages": {
+    "message": "選択した日付範囲でメッセージが見つかりません"
+  },
+  "tags": {
+    "message": "タグでフィルタ"
+  },
+  "tagsThisMessage": {
+    "message": "このメッセージのタグでフィルタ"
+  },
+  "tagsChooseTags": {
+    "message": "タグを選択..."
+  },
+  "tagsNoTags": {
+    "message": "Thunderbirdでタグが定義されていません"
+  },
+  "tagsNoMessages": {
+    "message": "選択したタグを持つメッセージが見つかりません"
+  },
+  "tagSeparator": {
+    "message": "-"
+  },
+  "attachment": {
+    "message": "添付ファイルでフィルタ"
+  },
+  "attachmentHas": {
+    "message": "添付ファイル付きでフィルタ"
+  },
+  "attachmentNone": {
+    "message": "添付ファイルなしでフィルタ"
+  },
+  "attachmentNoMessages": {
+    "message": "選択した添付ファイルフィルタでメッセージが見つかりません"
+  },
+  "readStatus": {
+    "message": "既読状態でフィルタ"
+  },
+  "readUnread": {
+    "message": "未読でフィルタ"
+  },
+  "readRead": {
+    "message": "既読でフィルタ"
+  },
+  "readNoMessages": {
+    "message": "メッセージが選択されていません"
+  },
+  "readFailed": {
+    "message": "既読状態でのフィルタリングに失敗しました"
+  },
+  "_translator_credit": {
+    "message": "日本語翻訳 - [あなたの名前]"
+  },
+  "_last_updated": {
+    "message": "2025-02-07"
+  }
+}
