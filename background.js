@@ -29,6 +29,7 @@ try {
     wrapAsync: (fn) => fn,
     validateNotNull: (v) => v,
     validateType: (v, t) => v,
+    validateArrayElements: (arr, t) => arr,
     validateString: (v) => v
   };
 }

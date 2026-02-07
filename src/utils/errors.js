@@ -264,6 +264,33 @@ function validateNumber(value, min = 0, max = Infinity, name = 'value') {
 }
 
 /**
+ * Validates that an array contains only elements of the expected type.
+ *
+ * @param {Array} array - Array to validate
+ * @param {string} expectedType - Expected type of array elements
+ * @param {string} [name='array'] - Name of the array (for error message)
+ * @throws {Error} If array is not an array or contains elements of wrong type
+ */
+function validateArrayElements(array, expectedType, name = 'array') {
+  validateType(array, 'array', name);
+  
+  for (let i = 0; i < array.length; i++) {
+    const element = array[i];
+    const actualType = typeof element;
+    
+    if (expectedType === 'array') {
+      if (!Array.isArray(element)) {
+        throw new Error(`Validation failed: ${name}[${i}] should be array, but got ${actualType}`);
+      }
+    } else if (actualType !== expectedType) {
+      throw new Error(`Validation failed: ${name}[${i}] should be ${expectedType}, but got ${actualType}`);
+    }
+  }
+  
+  return array;
+}
+
+/**
  * Creates a standardized error object.
  *
  * @param {ErrorType} type - Error type
@@ -367,6 +394,7 @@ const errors = {
   wrapSync,
   validateNotNull,
   validateType,
+  validateArrayElements,
   validateString,
   validateNumber,
   createError,
