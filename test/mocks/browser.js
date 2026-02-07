@@ -190,6 +190,12 @@ const storageMock = {
   local: storageLocalMock,
   sync: storageSyncMock,
   managed: storageManagedMock,
+  onChanged: {
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn(),
+    removeAllListeners: jest.fn(),
+  },
   // Helper to clear mock data
   _clear: () => {
     storageMockData.local = {};

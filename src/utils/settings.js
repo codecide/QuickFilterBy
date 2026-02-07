@@ -145,7 +145,7 @@ async function getSetting(key, defaultValue) {
     }
 
     if (!browser || !browser.storage) {
-      return DEFAULT_SETTINGS[key] || defaultValue;
+      return defaultValue !== undefined ? defaultValue : DEFAULT_SETTINGS[key];
     }
 
     // Read from storage
@@ -155,13 +155,14 @@ async function getSetting(key, defaultValue) {
     let value = result[key];
 
     if (value === undefined || value === null) {
-      value = DEFAULT_SETTINGS[key] || defaultValue;
+      // Use provided defaultValue if available, otherwise use DEFAULT_SETTINGS
+      value = defaultValue !== undefined ? defaultValue : DEFAULT_SETTINGS[key];
     }
 
     // Validate value
     if (!validateSetting(key, value)) {
       console.warn(`[Settings] Invalid value for ${key}:`, value);
-      value = DEFAULT_SETTINGS[key] || defaultValue;
+      value = defaultValue !== undefined ? defaultValue : DEFAULT_SETTINGS[key];
     }
 
     // Update cache
@@ -171,7 +172,7 @@ async function getSetting(key, defaultValue) {
     return value;
   } catch (error) {
     console.error(`[Settings] Error getting ${key}:`, error);
-    return DEFAULT_SETTINGS[key] || defaultValue;
+    return defaultValue !== undefined ? defaultValue : DEFAULT_SETTINGS[key];
   }
 }
 
@@ -446,6 +447,23 @@ async function init() {
   }
 }
 
+/**
+ * Clears the settings cache.
+ * Useful for testing or when you need to force a re-read from storage.
+ */
+function clearCache() {
+  settingsCache = null;
+}
+
+/**
+ * Clears all module state including cache and listeners.
+ * Useful for testing.
+ */
+function resetModuleState() {
+  settingsCache = null;
+  storageListeners.length = 0;
+}
+
 // Export all functions and constants
 const settings = {
   // Constants
@@ -473,7 +491,11 @@ const settings = {
   validateSettings,
 
   // Initialization
-  init
+  init,
+
+  // Cache management (for testing)
+  clearCache,
+  resetModuleState
 };
 
 // For use in browser extension context
