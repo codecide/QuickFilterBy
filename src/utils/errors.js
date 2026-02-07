@@ -219,7 +219,12 @@ function validateNotNull(value, name = 'value') {
  * @throws {Error} If value is not of expected type
  */
 function validateType(value, expectedType, name = 'value') {
-  const actualType = typeof value;
+  let actualType = typeof value;
+  
+  if (expectedType === 'array') {
+    actualType = Array.isArray(value) ? 'array' : actualType;
+  }
+  
   if (actualType !== expectedType) {
     throw new Error(`Validation failed: ${name} should be ${expectedType}, but got ${actualType}`);
   }
