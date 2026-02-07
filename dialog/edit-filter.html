@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Edit Filter</title>
+  <style>
+    body {
+      font-family: -moz-pull-down-menu, system-ui, sans-serif;
+      padding: 20px;
+      min-width: 400px;
+      max-width: 600px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    
+    button.primary {
+      background-color: #0060df;
+      color: white;
+    }
+    
+    button.primary:hover {
+      background-color: #003eaa;
+    }
+    
+    button.secondary {
+      background-color: #f0f0f0;
+      color: #333;
+    }
+    
+    button.secondary:hover {
+      background-color: #e0e0e0;
+    }
+    
+    .hint {
+      font-size: 12px;
+      color: #666;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-group">
+    <label for="filterValue">Filter Value:</label>
+    <input type="text" id="filterValue" autofocus>
+    <div class="hint">Edit the text before applying the filter</div>
+  </div>
+  
+  <div class="button-group">
+    <button id="applyButton" class="primary">Apply Filter</button>
+    <button id="cancelButton" class="secondary">Cancel</button>
+  </div>
+  
+  <script src="edit-filter.js"></script>
+</body>
+</html>

@@ -13,21 +13,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 
 #### Features
-- **Date Filtering**: Filter messages by date range with 6 preset options:
-  - Filter by Date (Today)
-  - Filter by Date (This Week)
-  - Filter by Date (This Month)
-  - Filter by Date (Last 7 Days)
-  - Filter by Date (Last 30 Days)
-  - Filter by Date (This Year)
-- **Tag Filtering**: Filter messages by tags with multi-select support:
+- **Date Filtering**: ❌ Not available - Thunderbird Quick Filter API limitation
+- **Tag Filtering**: Filter messages by tags from selected message:
   - Filter by This Message's Tags
-  - Choose Tags... submenu
+  - Menu item disabled when message has no tags
   - OR logic for multiple tags
-  - Clear indication when no tags defined
+- **Editable Filter Values**: Modify filter text before applying:
+  - Edit sender, recipient, or subject text in dialog
+  - Example: "3 missing keywords" → "missing keywords"
+  - Press Enter or click Apply Filter to use edited value
 - **Attachment Filtering**: Filter by attachment status:
   - Filter by Has Attachment
-  - Filter by No Attachment
   - Clear indication when no messages found
 - **Read Status Filtering**: Filter by read status:
   - Filter by Unread
@@ -108,6 +104,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Improved Alt-Click**: Enhanced support for all filter types
 - **Better Error Messages**: More descriptive, user-friendly error notifications
 - **Enhanced Menu Organization**: Grouped filter options logically
+- **Automatic Checksum Generation**: Build now generates SHA-256 checksum file alongside .xpi
+- **Simplified Menu Visibility**: Tag filter menu item disabled (not hidden) when no tags
 
 ### Performance
 - **Optimized Filtering**: Reduced filter application time

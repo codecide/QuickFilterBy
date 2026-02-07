@@ -1,13 +1,46 @@
 # Quick Filter By
 
-Mozilla Thunderbird extension that adds "Quick Filter By" context menu options to dramatically speed up filtering messages by common criteria. One-click filtering for senders, recipients, subjects, dates, tags, attachments, and read status.
+> **Fork of** [aramir/QuickFilterBy](https://github.com/aramir/QuickFilterBy)
+
+Mozilla Thunderbird extension that adds "Quick Filter By" context menu options to dramatically speed up filtering messages by common criteria. One-click filtering for senders, recipients, subjects, tags, attachments, and read status. Includes editable filter values to fine-tune your searches.
 
 [![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 [![Thunderbird Version](https://img.shields.io/badge/Thunderbird-115%2B--140.x-green.svg)](https://www.thunderbird.net/)
 [![Tests](https://img.shields.io/badge/tests-472%20passing-brightgreen.svg)](test/)
 [![Languages](https://img.shields.io/badge/languages-6-blue.svg)](#internationalization)
 
+**Original Author**: [Aramir](https://github.com/aramir)  
+**This Fork**: [codecide/QuickFilterBy](https://github.com/codecide/QuickFilterBy)
+
 > **Inspired by**: TheBat! e-mail client's quick filtering feature
+
+---
+
+## About This Fork
+
+This fork maintains the original Quick Filter By functionality while adding significant enhancements:
+
+### Major Enhancements (v15.0.0)
+
+1. **Editable Filter Values** - Modify filter text before applying
+2. **Tag Filtering** - Filter by tags from selected message (menu disabled when no tags)
+3. **Internationalization** - Added support for 6 languages (en, fr, es, de, zh_CN, ja)
+4. **Comprehensive Testing** - 472 tests covering functionality, accessibility, and security
+5. **Documentation** - Full documentation suite (README, CHANGELOG, CONTRIBUTING, SECURITY, ACCESSIBILITY)
+6. **Error Handling** - Robust error handling with user-friendly notifications
+7. **Build System** - Multiple build methods with automatic checksum generation
+
+### Maintained Original Features
+
+- Sender/Recipient/Subject filtering
+- Alt-click column support
+- Correspondent column support
+- Basic attachment and read status filtering
+
+### Removed/Limited Features
+
+- **Date filtering** - Removed (Thunderbird Quick Filter API limitation)
+- **"Choose Tags..." menu** - Simplified to tag filtering from selected message only
 
 ---
 
@@ -27,11 +60,17 @@ Mozilla Thunderbird extension that adds "Quick Filter By" context menu options t
 
 | Feature | Description |
 |----------|-------------|
-| **Date Filtering** | Filter messages by date range (Today, This Week, This Month, Last 7 Days, Last 30 Days, This Year) |
-| **Tag Filtering** | Filter by message tags (multi-select support, OR logic) |
-| **Attachment Filtering** | Filter by attachment status (Has Attachment / No Attachment) |
+| **Editable Filter Values** | Modify filter values before applying (e.g., change "3 missing keywords" to "missing keywords") |
+| **Tag Filtering** | Filter by message tags (from selected message) |
+| **Attachment Filtering** | Filter by attachment status (Has Attachment) |
 | **Read Status Filtering** | Filter by read status (Unread / Read) |
 | **Correspondent Column** | Works with Thunderbird's correspondent column (Alt-click support) |
+
+### Limitations
+
+| Feature | Status | Notes |
+|---------|--------|-------|
+| **Date Filtering** | ❌ Not Available | Thunderbird Quick Filter API doesn't support date filtering |
 
 ### Keyboard Shortcuts
 
@@ -100,16 +139,15 @@ For detailed security information, see [SECURITY.md](SECURITY.md)
    - **Filter by Subject**: Filter by same subject text
 
 **Advanced Filters:**
-   - **Filter by Date** → Choose date range:
-     - Filter by Date (Today)
-     - Filter by Date (This Week)
-     - Filter by Date (This Month)
-     - Filter by Date (Last 7 Days)
-     - Filter by Date (Last 30 Days)
-     - Filter by Date (This Year)
-   - **Filter by Tag** → Select tags to filter
-   - **Filter by Attachment** → Has Attachment / No Attachment
-   - **Filter by Read Status** → Unread / Read
+    - **Filter by Tag** → Filter by tags from selected message
+    - **Filter by Attachment** → Has Attachment
+    - **Filter by Read Status** → Unread / Read
+
+**Edit Filter Values:**
+    When you click any text filter (Sender, Recipient, Subject), a dialog opens allowing you to edit the filter value before applying it. For example:
+    - Original subject: "3 missing keywords"
+    - Edit to: "missing keywords"
+    - Result: Shows all messages with "missing keywords" in subject (broader match)
 
 #### Using Alt-Click (Fastest Method)
 
@@ -130,14 +168,15 @@ Hold `Alt` key and click on:
 |----------|--------|---------|
 | **Context Menu Filtering** | ✅ | Right-click to filter messages |
 | **Alt-Click Filtering** | ✅ | Alt + Click on column headers |
+| **Editable Filter Values** | ✅ | Edit text before applying filter |
 | **Filter by Sender** | ✅ | Context menu or alt-click |
 | **Filter by Sender Email** | ✅ | Context menu only |
 | **Filter by Recipients** | ✅ | Context menu or alt-click |
 | **Filter by Subject** | ✅ | Context menu or alt-click |
-| **Filter by Date** | ✅ | Context menu (6 presets) |
-| **Filter by Tags** | ✅ | Context menu (multi-select) |
-| **Filter by Attachment** | ✅ | Context menu (2 options) |
-| **Filter by Read Status** | ✅ | Context menu (2 options) |
+| **Filter by Tags** | ✅ | Context menu (from selected message) |
+| **Filter by Attachment** | ✅ | Context menu (Has Attachment) |
+| **Filter by Read Status** | ✅ | Context menu (Unread/Read) |
+| **Filter by Date** | ❌ | Not supported by Quick Filter API |
 | **Correspondent Column** | ✅ | Alt-click support |
 | **Internationalization** | ✅ | 6 languages (en, fr, es, de, zh_CN, ja) |
 
@@ -146,10 +185,11 @@ Hold `Alt` key and click on:
 | Feature | Thunderbird Quick Filter | Quick Filter By |
 |---------|-------------------------|-----------------|
 | Filter by sender | Manual typing required | ✓ One-click (alt-click or menu) |
+| Editable filter values | ✗ | ✓ Modify text before applying |
 | Filter by recipient | Manual typing required | ✓ One-click (alt-click or menu) |
 | Filter by subject | Manual typing required | ✓ One-click (alt-click or menu) |
-| Filter by date | ✓ | ✓ One-click with presets |
-| Filter by tags | ✓ | ✓ One-click with multi-select |
+| Filter by date | ✗ (API limitation) | ✗ Same limitation |
+| Filter by tags | ✓ | ✓ One-click from message |
 | Filter by attachments | ✓ | ✓ One-click |
 | Filter by read status | ✓ | ✓ One-click |
 | Multiple message selection | ✓ | Planned for future |
@@ -224,10 +264,21 @@ gradle build
 
 ### Verification
 
-All build methods produce identical `.xpi` files. You can verify with SHA-256 checksum:
+All build methods produce identical `.xpi` files with a corresponding SHA-256 checksum file for verification.
 
+The build process automatically creates:
+- `dist/QuickFilterBy.xpi` - The extension file
+- `dist/QuickFilterBy.xpi.sha256` - SHA-256 checksum for verification
+
+To verify the downloaded file hasn't been corrupted:
 ```bash
-sha256sum dist/QuickFilterBy.xpi
+# Navigate to dist directory
+cd dist
+
+# Verify checksum
+sha256sum -c QuickFilterBy.xpi.sha256
+
+# Should output: QuickFilterBy.xpi: OK
 ```
 
 ### Running Tests
@@ -368,6 +419,9 @@ QuickFilterBy/
 │   └── MessagesListAdapter/
 │       ├── schema.json   # Experimental API schema
 │       └── implementation.js  # Experimental API implementation
+├── dialog/               # Filter edit dialogs
+│   ├── edit-filter.html  # Edit filter value dialog
+│   └── edit-filter.js   # Dialog logic
 ├── _locales/             # Translations
 │   ├── en/            # English
 │   ├── fr/            # French
@@ -480,11 +534,12 @@ See [CHANGELOG.md](CHANGELOG.md) for version history and recent changes.
 ### Recent Highlights
 
 **v15.0.0** (Upcoming):
-- ✨ New: Date filtering with 6 presets
-- ✨ New: Tag filtering with multi-select
-- ✨ New: Attachment filtering (Has/No)
+- ✨ New: Editable filter values - modify text before applying filters
+- ✨ New: Tag filtering from selected message
+- ✨ New: Attachment filtering (Has Attachment)
 - ✨ New: Read status filtering (Unread/Read)
-- ✨ New: Internationalization support (6 languages)
+- 📝 Documentation: Updated to reflect API limitations (date filtering not available)
+- 🔧 Build: Added "tabs" permission for dialog support
 - 🔒 Security: Content Security Policy added
 - ♿ Accessibility: Comprehensive A11y documentation and tests
 - 🧪 Tests: 472 tests passing (100+ new tests added)

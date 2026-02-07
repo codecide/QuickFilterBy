@@ -56,17 +56,12 @@ browser.menus.create({
       const message = info.selectedMessages.messages[0];
       ErrorUtils.validateNotNull(message, 'message');
 
-      await browser.mailTabs.setQuickFilter({
-        text: {
-          text: message.author,
-          author: true,
-        },
-      });
+      await openFilterDialog('sender', message.author);
     } catch (error) {
       ErrorUtils.logError(error, { context: 'sender menu item' });
       await ErrorUtils.showErrorNotification(
         'Filter Failed',
-        'Could not filter by sender. Please try again.',
+        'Could not open filter dialog. Please try again.',
         { type: 'error' }
       );
     }
@@ -99,17 +94,12 @@ browser.menus.create({
         author = author.substring(author.indexOf("<") + 1, author.lastIndexOf(">"));
       }
 
-      await browser.mailTabs.setQuickFilter({
-        text: {
-          text: author,
-          author: true,
-        },
-      });
+      await openFilterDialog('senderEmail', author);
     } catch (error) {
       ErrorUtils.logError(error, { context: 'senderEmail menu item' });
       await ErrorUtils.showErrorNotification(
         'Filter Failed',
-        'Could not filter by sender email. Please try again.',
+        'Could not open filter dialog. Please try again.',
         { type: 'error' }
       );
     }
@@ -134,17 +124,12 @@ browser.menus.create({
       const message = info.selectedMessages.messages[0];
       ErrorUtils.validateNotNull(message, 'message');
 
-      await browser.mailTabs.setQuickFilter({
-        text: {
-          text: message.recipients.join(", "),
-          recipients: true,
-        },
-      });
+      await openFilterDialog('recipient', message.recipients.join(", "));
     } catch (error) {
       ErrorUtils.logError(error, { context: 'recipient menu item' });
       await ErrorUtils.showErrorNotification(
         'Filter Failed',
-        'Could not filter by recipient. Please try again.',
+        'Could not open filter dialog. Please try again.',
         { type: 'error' }
       );
     }
@@ -169,17 +154,12 @@ browser.menus.create({
       const message = info.selectedMessages.messages[0];
       ErrorUtils.validateNotNull(message, 'message');
 
-      await browser.mailTabs.setQuickFilter({
-        text: {
-          text: message.recipients.join(", "),
-          recipients: true,
-        },
-      });
+      await openFilterDialog('recipients', message.recipients.join(", "));
     } catch (error) {
       ErrorUtils.logError(error, { context: 'recipients menu item' });
       await ErrorUtils.showErrorNotification(
         'Filter Failed',
-        'Could not filter by recipients. Please try again.',
+        'Could not open filter dialog. Please try again.',
         { type: 'error' }
       );
     }
@@ -204,17 +184,12 @@ browser.menus.create({
       const message = info.selectedMessages.messages[0];
       ErrorUtils.validateNotNull(message, 'message');
 
-      await browser.mailTabs.setQuickFilter({
-        text: {
-          text: message.subject,
-          subject: true,
-        },
-      });
+      await openFilterDialog('subject', message.subject);
     } catch (error) {
       ErrorUtils.logError(error, { context: 'subject menu item' });
       await ErrorUtils.showErrorNotification(
         'Filter Failed',
-        'Could not filter by subject. Please try again.',
+        'Could not open filter dialog. Please try again.',
         { type: 'error' }
       );
     }
@@ -429,30 +404,19 @@ browser.menus.create({
       const message = info.selectedMessages.messages[0];
       ErrorUtils.validateNotNull(message, 'message');
 
-      console.log('[Tags-This-Message] Message object:', message);
-      console.log('[Tags-This-Message] Message.tags:', message.tags);
-
       // Get tags from the selected message
       // Note: message.tags is already an array of tag strings (not objects)
       const tags = message.tags || [];
-      console.log('[Tags-This-Message] Extracted tags array:', tags);
-      console.log('[Tags-This-Message] Tags length:', tags.length);
 
+      // If message has no tags, don't apply filter
       if (tags.length === 0) {
-        console.log('[Tags-This-Message] No tags found, showing notification');
-        await ErrorUtils.showErrorNotification(
-          'No Tags',
-          'This message has no tags. Please add tags to the message first.',
-          { type: 'info' }
-        );
+        console.log('[Tags-This-Message] Message has no tags, skipping filter');
         return;
       }
 
       // Tags are already strings, pass directly to filter function
-      console.log('[Tags-This-Message] Using tags:', tags);
       await filterByTags(tags);
     } catch (error) {
-      console.error('[Tags-This-Message] Error:', error);
       ErrorUtils.logError(error, { context: 'tags-this-message menu item' });
       await ErrorUtils.showErrorNotification(
         'Filter Failed',
@@ -461,6 +425,35 @@ browser.menus.create({
       );
     }
   },
+});
+
+/**
+ * Handle menu shown event to disable "Filter by This Message's Tags"
+ * when the selected message has no tags.
+ */
+browser.menus.onShown.addListener(async (info, tab) => {
+  try {
+    // Check if the selected message has tags
+    if (info.selectedMessages && info.selectedMessages.messages.length > 0) {
+      const message = info.selectedMessages.messages[0];
+      const tags = message.tags || [];
+      const hasTags = tags.length > 0;
+
+      // Enable/disable the "Filter by This Message's Tags" menu item
+      console.log('[Menu-Update] Tags count:', tags.length, 'hasTags:', hasTags);
+      await browser.menus.update("tags-this-message", {
+        enabled: hasTags
+      });
+    } else {
+      // No message selected, disable the menu item
+      console.log('[Menu-Update] No message selected, disabling menu item');
+      await browser.menus.update("tags-this-message", {
+        enabled: false
+      });
+    }
+  } catch (error) {
+    console.error('[Menu-Update] Error updating menu state:', error);
+  }
 });
 
 // ============================================================================
@@ -704,6 +697,125 @@ browser.MessagesListAdapter.onMessageListClick.addListener((columnName, columnTe
     );
   }
 });
+
+// ============================================================================
+// DIALOG HELPER FUNCTIONS
+// ============================================================================
+
+/**
+ * Open filter edit dialog for user to modify filter value.
+ *
+ * @param {string} filterType - Type of filter (sender, recipient, subject, etc.)
+ * @param {string} value - Initial filter value
+ * @returns {Promise<void>}
+ */
+async function openFilterDialog(filterType, value) {
+  try {
+    ErrorUtils.validateString(filterType, 'filterType');
+    ErrorUtils.validateString(value, 'value');
+
+    const dialogUrl = `dialog/edit-filter.html?type=${encodeURIComponent(filterType)}&value=${encodeURIComponent(value)}`;
+
+    await browser.windows.create({
+      url: dialogUrl,
+      type: 'popup',
+      width: 500,
+      height: 200,
+    });
+  } catch (error) {
+    ErrorUtils.logError(error, { context: 'openFilterDialog', filterType, value });
+    throw error;
+  }
+}
+
+// ============================================================================
+// DIALOG MESSAGE HANDLER
+// ============================================================================
+
+browser.runtime.onMessage.addListener((message) => {
+  if (message.action === 'applyEditedFilter') {
+    applyEditedFilter(message.filter, message.tabId);
+  } else if (message.action === 'cancelFilterDialog') {
+    // Dialog cancelled, nothing to do
+  } else if (message.action === 'closeFilterDialog') {
+    if (message.error) {
+      console.error('[QuickFilterBy] Dialog error:', message.error);
+    }
+  }
+});
+
+/**
+ * Apply filter with user-edited value.
+ *
+ * @param {Object} filter - Filter object with type and value
+ * @param {string} filter.type - Filter type (sender, recipient, subject, etc.)
+ * @param {string} filter.value - User-edited filter value
+ * @param {number} tabId - Tab ID to apply filter to
+ */
+async function applyEditedFilter(filter, tabId) {
+  try {
+    ErrorUtils.validateNotNull(filter, 'filter');
+    ErrorUtils.validateNotNull(filter.type, 'filter.type');
+    ErrorUtils.validateString(filter.value, 'filter.value');
+    
+    let quickFilterProperties = {};
+    
+    switch (filter.type) {
+      case 'sender':
+        quickFilterProperties = {
+          text: {
+            text: filter.value,
+            author: true,
+          },
+        };
+        break;
+      case 'senderEmail':
+        quickFilterProperties = {
+          text: {
+            text: filter.value,
+            author: true,
+          },
+        };
+        break;
+      case 'recipient':
+      case 'recipients':
+        quickFilterProperties = {
+          text: {
+            text: filter.value,
+            recipients: true,
+          },
+        };
+        break;
+      case 'subject':
+        quickFilterProperties = {
+          text: {
+            text: filter.value,
+            subject: true,
+          },
+        };
+        break;
+      case 'body':
+        quickFilterProperties = {
+          text: {
+            text: filter.value,
+            body: true,
+          },
+        };
+        break;
+      default:
+        throw new Error(`Unknown filter type: ${filter.type}`);
+    }
+    
+    await browser.mailTabs.setQuickFilter(tabId, quickFilterProperties);
+  } catch (error) {
+    ErrorUtils.logError(error, { context: 'applyEditedFilter', filter });
+    await ErrorUtils.showErrorNotification(
+      'Filter Failed',
+      `Could not apply ${filter.type} filter. Please try again.`,
+      { type: 'error' }
+    );
+  }
+}
 
 // ============================================================================
 // TAB INITIALIZATION

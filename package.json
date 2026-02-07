@@ -7,10 +7,10 @@
     "doc": "docs"
   },
     "scripts": {
-    "build": "npm run clean && mkdir -p dist && zip -r dist/QuickFilterBy.xpi background.js manifest.json _locales api src options -x '*.DS_Store' '*.test.js' 'test/*' 'node_modules/*' 'coverage/*' 'docs/*' 'dist/*' '.git/*'",
+    "build": "npm run clean && mkdir -p dist && zip -r dist/QuickFilterBy.xpi background.js manifest.json _locales api src options dialog -x '*.DS_Store' '*.test.js' 'test/*' 'node_modules/*' 'coverage/*' 'docs/*' 'dist/*' '.git/*' && npm run checksum",
     "clean": "rm -rf dist",
     "install": "npm run build",
-    "checksum": "sha256sum dist/QuickFilterBy.xpi > dist/QuickFilterBy.xpi.sha256",
+    "checksum": "cd dist && sha256sum QuickFilterBy.xpi > QuickFilterBy.xpi.sha256",
     "lint": "echo \"Linting not yet configured\"",
     "test": "jest",
     "test:coverage": "jest --coverage",
@@ -19,7 +19,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codecide/QuickFilterBy.git"
+    "url": "git+https://github.com/codecide/QuickFilterBy.git",
+    "upstream": "https://github.com/aramir/QuickFilterBy.git"
   },
   "keywords": [
     "thunderbird",

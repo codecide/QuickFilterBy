@@ -93,11 +93,11 @@ function logError(error, context = {}) {
  * Shows a user-friendly error notification.
  *
  * @param {string} title - Notification title
- * @param {string} message - Error message to display to user
- * @param {Object} [options={}] - Additional options
- * @param {string} [options.type='error'] - Notification type ('error', 'warning', 'info')
- * @param {number} [options.timeout=5000] - How long to show notification (ms)
- */
+  * @param {string} message - Error message to display to user
+  * @param {Object} [options={}] - Additional options
+  * @param {string} [options.type='error'] - Notification type ('error', 'warning', 'info')
+  * @param {number} [options.timeout=5000] - How long to show notification (ms)
+  */
 async function showErrorNotification(title, message, options = {}) {
   const { type = 'error', timeout = 5000 } = options;
 
@@ -106,7 +106,6 @@ async function showErrorNotification(title, message, options = {}) {
     if (browser && browser.notifications) {
       await browser.notifications.create({
         type: 'basic',
-        iconUrl: browser.runtime.getURL('icon48.png') || '',
         title: title,
         message: message
       });
