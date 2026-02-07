@@ -52,7 +52,5 @@
     "storage",
     "notifications"
   ],
-  "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'none'"
-  }
+  "content_security_policy": "script-src 'self'; object-src 'none'"
 }
