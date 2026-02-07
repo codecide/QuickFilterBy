@@ -61,5 +61,17 @@
   },
   "tagSeparator": {
     "message": "-"
+  },
+  "attachment": {
+    "message": "Filter by Attachment"
+  },
+  "attachmentHas": {
+    "message": "Filter by Has Attachment"
+  },
+  "attachmentNone": {
+    "message": "Filter by No Attachment"
+  },
+  "attachmentNoMessages": {
+    "message": "No messages found with selected attachment filter"
   }
 }

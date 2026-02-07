@@ -8,6 +8,7 @@
  * - Tab initialization for all mail tabs
  * - Date-based message filtering
  * - Tag-based message filtering
+ * - Attachment status filtering
  *
  * @file background.js
  * @version 14.0.1
@@ -517,6 +518,78 @@ browser.menus.create({
 });
 
 // ============================================================================
+// ATTACHMENT STATUS FILTERING
+// ============================================================================
+
+/**
+ * Filter messages by attachment status.
+ * Uses setQuickFilter with attachment status parameter.
+ *
+ * @param {boolean} hasAttachment - true for has attachment, false for no attachment
+ * @returns {Promise<void>}
+ */
+async function filterByAttachmentStatus(hasAttachment) {
+  try {
+    ErrorUtils.validateType(hasAttachment, 'boolean');
+
+    await browser.mailTabs.setQuickFilter({
+      attachmentStatus: hasAttachment ? "attached" : "missing",
+    });
+    console.log('[Attachment Filter] Filtered by attachment status:', hasAttachment ? 'has attachment' : 'no attachment');
+  } catch (error) {
+    ErrorUtils.logError(error, { context: 'attachment filter', hasAttachment });
+    await ErrorUtils.showErrorNotification(
+      'Filter Failed',
+      'Could not filter by attachment status. Please try again.',
+      { type: 'error' }
+    );
+  }
+}
+
+/**
+ * Create context menu separator for attachment filters.
+ */
+browser.menus.create({
+  type: "separator",
+  contexts: ["message_list"],
+});
+
+/**
+ * Create context menu for attachment filters.
+ */
+browser.menus.create({
+  id: "attachment-filter-menu",
+  title: browser.i18n.getMessage("attachment"),
+  contexts: ["message_list"],
+});
+
+/**
+ * Create context menu item for filtering messages with attachments.
+ */
+browser.menus.create({
+  id: "attachment-has",
+  title: browser.i18n.getMessage("attachmentHas"),
+  contexts: ["message_list"],
+  parentId: "attachment-filter-menu",
+  async onclick(info) {
+    await filterByAttachmentStatus(true);
+  },
+});
+
+/**
+ * Create context menu item for filtering messages without attachments.
+ */
+browser.menus.create({
+  id: "attachment-none",
+  title: browser.i18n.getMessage("attachmentNone"),
+  contexts: ["message_list"],
+  parentId: "attachment-filter-menu",
+  async onclick(info) {
+    await filterByAttachmentStatus(false);
+  },
+});
+
+// ============================================================================
 // MENU VISIBILITY HANDLER
 // ============================================================================
 
@@ -538,7 +611,8 @@ browser.menus.onShown.addListener((info) => {
     const menuIds = [
       "sender", "senderEmail", "recipient", "recipients", "subject",
       "date-today", "date-this-week", "date-this-month", "date-last-7days", "date-last-30days",
-      "tags-this-message", "tags-placeholder"
+      "tags-this-message", "tags-placeholder",
+      "attachment-filter-menu", "attachment-has", "attachment-none"
     ];
     for (const menuId of menuIds) {
       browser.menus.update(menuId, { visible: oneMessage });

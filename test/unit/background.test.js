@@ -162,6 +162,21 @@ describe('background.js - Script Structure', () => {
     expect(backgroundScriptContent).toContain('browser.messages.tags.list');
   });
 
+  it('should create attachment-filter-menu menu item', () => {
+    expect(backgroundScriptContent).toContain('id: "attachment-filter-menu"');
+    expect(backgroundScriptContent).toContain('filterByAttachmentStatus');
+  });
+
+  it('should create attachment-has menu item', () => {
+    expect(backgroundScriptContent).toContain('id: "attachment-has"');
+    expect(backgroundScriptContent).toContain('await filterByAttachmentStatus(true)');
+  });
+
+  it('should create attachment-none menu item', () => {
+    expect(backgroundScriptContent).toContain('id: "attachment-none"');
+    expect(backgroundScriptContent).toContain('await filterByAttachmentStatus(false)');
+  });
+
   it('should register onShown listener', () => {
     expect(backgroundScriptContent).toContain('browser.menus.onShown.addListener');
   });
