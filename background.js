@@ -378,15 +378,17 @@ async function filterByTags(tags) {
 
     // Convert array of tag strings to TagsDetail format required by setQuickFilter
     // Input: ["test", "important"]
-    // Output: {mode: "any", tags: {"test": true, "important": true}}
+    // Output: {tags: {mode: "any", tags: {"test": true, "important": true}}}
     const tagsObject = {};
     tags.forEach(tag => {
       tagsObject[tag] = true;
     });
 
     await browser.mailTabs.setQuickFilter({
-      mode: "any", // Show messages with ANY of the selected tags
-      tags: tagsObject
+      tags: {
+        mode: "any", // Show messages with ANY of the selected tags
+        tags: tagsObject
+      }
     });
   } catch (error) {
     console.error('[Tag Filter] Error:', error);
