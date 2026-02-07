@@ -1,0 +1,70 @@
+name: CD
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20.x'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run tests
+      run: npm test
+
+    - name: Build extension
+      run: |
+        npm run build || bash ./scripts/build.sh
+        if [ -f dist/QuickFilterBy.xpi ]; then
+          echo "Build successful"
+        else
+          echo "Build failed - no .xpi file found"
+          exit 1
+        fi
+
+    - name: Generate SHA-256 checksum
+      run: |
+        if [ ! -f dist/QuickFilterBy.xpi.sha256 ]; then
+          sha256sum dist/QuickFilterBy.xpi > dist/QuickFilterBy.xpi.sha256
+          echo "Checksum generated"
+        else
+          echo "Checksum already exists"
+        fi
+        cat dist/QuickFilterBy.xpi.sha256
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          dist/QuickFilterBy.xpi
+          dist/QuickFilterBy.xpi.sha256
+        generate_release_notes: true
+        fail_on_unmatched_files: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload release artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: release-artifacts
+        path: |
+          dist/QuickFilterBy.xpi
+          dist/QuickFilterBy.xpi.sha256
+        retention-days: 365
