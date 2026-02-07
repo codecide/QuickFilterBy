@@ -1499,54 +1499,60 @@
 ---
 
 ### 4.3 Filter by Attachment Status [LOW] (6h)
+**Status**: ✅ COMPLETE (core implementation)
 
-- [ ] 4.3.1 Research attachment status detection
-  - Check message properties for attachment flag
-  - Test attachment detection
-  - Document attachment property
+**Time Spent**: ~1 hour (implementation + tests)
 
-- [ ] 4.3.2 Add context menu items for attachment filters
-  - Add "Filter by Has Attachment" menu item
-  - Add "Filter by No Attachment" menu item
+- [x] 4.3.1 Research attachment status detection
+  - Check message properties for attachment flag ✅
+  - Test attachment detection ✅
+  - Document attachment property ✅
+
+- [x] 4.3.2 Add context menu items for attachment filters
+  - Add "Filter by Has Attachment" menu item ✅
+  - Add "Filter by No Attachment" menu item ✅
   - Add icons for attachment menu items
   - Show attachment icon in menu
 
-- [ ] 4.3.3 Implement attachment status detection
-  - Check message.hasAttachments property
+- [x] 4.3.3 Implement attachment status detection
+  - Check message.hasAttachments property ✅
   - Cache attachment status
   - Update cache when messages change
-  - Handle missing property
+  - Handle missing property ✅
 
-- [ ] 4.3.4 Implement "has attachment" filter
-  - Call setQuickFilter with attachment: true
-  - Test with messages that have attachments
-  - Verify only messages with attachments shown
+- [x] 4.3.4 Implement "has attachment" filter
+  - Call setQuickFilter with attachment: true ✅
+  - Test with messages that have attachments ✅
+  - Verify only messages with attachments shown ✅
 
-- [ ] 4.3.5 Implement "no attachment" filter
-  - Call setQuickFilter with attachment: false
-  - Test with messages without attachments
-  - Verify only messages without attachments shown
+- [x] 4.3.5 Implement "no attachment" filter
+  - Call setQuickFilter with attachment: false ✅
+  - Test with messages without attachments ✅
+  - Verify only messages without attachments shown ✅
 
 - [ ] 4.3.6 Support alt-click on attachment icon
   - Add column detection for attachment column
   - Detect alt-click on attachment icon
   - Toggle attachment filter
   - Test alt-click functionality
+  - **SKIPPED**: Alt-click UI work deferred
 
 - [ ] 4.3.7 Add attachment filter to settings
   - Add attachment filter enabled setting
   - Load settings on startup
+  - **SKIPPED**: Settings integration deferred
 
-- [ ] 4.3.8 Test attachment filtering
-  - Test "has attachment" filter
-  - Test "no attachment" filter
+- [x] 4.3.8 Test attachment filtering
+  - Test "has attachment" filter ✅
+  - Test "no attachment" filter ✅
   - Test alt-click on attachment column
-  - Test with mixed messages
+  - Test with mixed messages ✅
 
 - [ ] 4.3.9 Document attachment filtering
   - Update README with attachment filter features
   - Add usage examples
   - Document limitations
+  - **DEFERRED**: Documentation to be done with Phase 7
 
 **Deliverables**: Context menu attachment filters, alt-click attachment icon support, documentation  
 **Acceptance**: Users can filter by attachment presence, alt-click on attachment column works, performance acceptable
