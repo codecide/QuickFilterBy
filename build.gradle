@@ -1,9 +1,51 @@
+// QuickFilterBy Gradle Build Configuration
+// Builds the Thunderbird extension package
+
+apply plugin: 'java'
+
+// Read version from manifest.json
+ext.manifest = new groovy.json.JsonSlurper().parseText(file('manifest.json').text)
+version = manifest.version
+
+// Build task
 task build(type: Zip) {
-	from '/'
-	include '*.js'
-	include '*.json'
-	include '_locales/**'
-	include 'api/**'
-	archiveName 'QuickFilterBy.xpi'
-	destinationDir(file('/dist/'))
+    from '/'
+    include '*.js'
+    include '*.json'
+    include '_locales/**'
+    include 'api/**'
+    include 'src/**'
+    exclude '*.DS_Store'
+    exclude '.git/**'
+    exclude 'node_modules/**'
+    exclude 'scripts/**'
+    exclude 'test/**'
+    exclude 'docs/**'
+    archiveName 'QuickFilterBy.xpi'
+    destinationDir(file('dist/'))
 }
+
+// Clean task
+task clean(type: Delete) {
+    delete 'dist'
+}
+
+// Checksum generation task
+task checksum(dependsOn: build) {
+    doLast {
+        ant.checksum(file: 'dist/QuickFilterBy.xpi', algorithm: 'sha-256', todir: 'dist/')
+        println "SHA-256 checksum generated: dist/QuickFilterBy.xpi.sha256"
+    }
+}
+
+// Install task
+task install(dependsOn: checksum) {
+    doLast {
+        println "Extension ready for installation in Thunderbird"
+        println "  Package: dist/QuickFilterBy.xpi"
+        println "  Version: ${version}"
+    }
+}
+
+// Default task
+defaultTasks 'build'

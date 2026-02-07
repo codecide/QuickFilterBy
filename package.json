@@ -1,0 +1,29 @@
+{
+  "name": "quickfilter",
+  "version": "14.0.0",
+  "description": "Mozilla Thunderbird extension that adds a \"Quick Filter By\" messages list context menu which greatly speeds up creation of a Quick Filter for the most common use cases.",
+  "main": "background.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "npm run clean && mkdir -p dist && zip -r dist/QuickFilterBy.xpi *.js *.json _locales api src -x *.DS_Store",
+    "clean": "rm -rf dist",
+    "install": "npm run build",
+    "checksum": "sha256sum dist/QuickFilterBy.xpi > dist/QuickFilterBy.xpi.sha256",
+    "lint": "echo \"Linting not yet configured\"",
+    "test": "echo \"Tests not yet configured\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codecide/QuickFilterBy.git"
+  },
+  "keywords": ["thunderbird", "extension", "quick-filter", "email", "filter"],
+  "author": "QuickFilterBy Contributors",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/codecide/QuickFilterBy/issues"
+  },
+  "homepage": "https://github.com/codecide/QuickFilterBy#readme"
+}
