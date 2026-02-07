@@ -392,13 +392,6 @@ async function filterByTags(tags) {
     );
   }
 }
-        'Filter Failed',
-        'Could not access tags. Please try again.',
-        { type: 'error' }
-      );
-    }
-  },
-});
 
 // ============================================================================
 // ATTACHMENT STATUS FILTERING
