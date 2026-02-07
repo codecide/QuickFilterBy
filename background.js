@@ -369,17 +369,29 @@ browser.menus.create({
  */
 async function filterByTags(tags) {
   try {
-    ErrorUtils.validateNotNull(tags, 'tags');
     ErrorUtils.validateType(tags, 'array');
+    ErrorUtils.validateArrayElements(tags, 'string');
 
-    if (tags.length === 0) {
-      console.warn('[Tag Filter] No tags provided, clearing tag filter');
-      // Clear tag filter by setting empty tags array
-      await browser.mailTabs.setQuickFilter({
-        tags: {
-          mode: "or",
-          tags: []
-        }
+    console.log('[Tag Filter] Attempting to filter by tags:', tags);
+    console.log('[Tag Filter] Tags array type:', typeof tags, 'length:', tags.length);
+    console.log('[Tag Filter] Calling setQuickFilter with:', { mode: "or", tags: tags });
+
+    await browser.mailTabs.setQuickFilter({
+      mode: "or", // Show messages with ANY of the selected tags
+      tags: tags
+    });
+
+    console.log('[Tag Filter] setQuickFilter completed successfully');
+  } catch (error) {
+    console.error('[Tag Filter] Error:', error);
+    ErrorUtils.logError(error, { context: 'tag filter', tags });
+    await ErrorUtils.showErrorNotification(
+      'Filter Failed',
+      `Could not filter by tags: ${error.message || 'Unknown error'}`,
+      { type: 'error' }
+    );
+  }
+}
       });
       return;
     }
@@ -425,10 +437,16 @@ browser.menus.create({
       const message = info.selectedMessages.messages[0];
       ErrorUtils.validateNotNull(message, 'message');
 
+      console.log('[Tags-This-Message] Message object:', message);
+      console.log('[Tags-This-Message] Message.tags:', message.tags);
+
       // Get tags from the selected message
       const tags = message.tags || [];
+      console.log('[Tags-This-Message] Extracted tags array:', tags);
+      console.log('[Tags-This-Message] Tags length:', tags.length);
 
       if (tags.length === 0) {
+        console.log('[Tags-This-Message] No tags found, showing notification');
         await ErrorUtils.showErrorNotification(
           'No Tags',
           'This message has no tags. Please add tags to the message first.',
@@ -437,8 +455,13 @@ browser.menus.create({
         return;
       }
 
-      await filterByTags(tags);
+      // Extract tag keys if tags are objects
+      const tagKeys = tags.map(tag => typeof tag === 'string' ? tag : tag.key);
+      console.log('[Tags-This-Message] Tag keys:', tagKeys);
+
+      await filterByTags(tagKeys);
     } catch (error) {
+      console.error('[Tags-This-Message] Error:', error);
       ErrorUtils.logError(error, { context: 'tags-this-message menu item' });
       await ErrorUtils.showErrorNotification(
         'Filter Failed',
@@ -461,11 +484,16 @@ browser.menus.create({
   contexts: ["message_list"],
   async onclick(info) {
     try {
+      console.log('[Tags-Choose] Attempting to get all tags...');
+
       // Try to get all tags
       let tags;
       try {
         tags = await browser.messages.tags.list();
+        console.log('[Tags-Choose] Got tags from API:', tags);
+        console.log('[Tags-Choose] Tags count:', tags?.length);
       } catch (e) {
+        console.error('[Tags-Choose] Error getting tags:', e);
         // Tags API might not be available
         await ErrorUtils.showErrorNotification(
           'Tags Not Available',
@@ -476,6 +504,7 @@ browser.menus.create({
       }
 
       if (!tags || tags.length === 0) {
+        console.log('[Tags-Choose] No tags defined');
         await ErrorUtils.showErrorNotification(
           browser.i18n.getMessage("tagsNoTags"),
           'Please create tags in Thunderbird first: Tools > Message Tags.',
@@ -487,9 +516,13 @@ browser.menus.create({
       // For now, just filter by the first tag as a demo
       // Full implementation would show a popup UI with all tags
       const firstTag = tags[0];
+      console.log('[Tags-Choose] Using first tag:', firstTag);
+      console.log('[Tags-Choose] First tag key:', firstTag.key);
+
       await filterByTags([firstTag.key]);
 
     } catch (error) {
+      console.error('[Tags-Choose] Error:', error);
       ErrorUtils.logError(error, { context: 'tags-choose-tags menu item' });
       await ErrorUtils.showErrorNotification(
         'Filter Failed',
