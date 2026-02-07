@@ -366,6 +366,9 @@ browser.menus.create({
  *
  * @param {Array<string>} tags - Array of tag keys (e.g., ["$label1", "$label2"])
  * @returns {Promise<void>}
+ *
+ * Note: In Thunderbird, message.tags is already an array of tag strings (not objects).
+ * There is no browser.messages.tags.list() API - tags are accessed via message.tags property.
  */
 async function filterByTags(tags) {
   try {
@@ -374,6 +377,7 @@ async function filterByTags(tags) {
 
     console.log('[Tag Filter] Attempting to filter by tags:', tags);
     console.log('[Tag Filter] Tags array type:', typeof tags, 'length:', tags.length);
+    console.log('[Tag Filter] Tags being used:', tags);
     console.log('[Tag Filter] Calling setQuickFilter with:', { mode: "or", tags: tags });
 
     await browser.mailTabs.setQuickFilter({
@@ -425,6 +429,7 @@ browser.menus.create({
       console.log('[Tags-This-Message] Message.tags:', message.tags);
 
       // Get tags from the selected message
+      // Note: message.tags is already an array of tag strings (not objects)
       const tags = message.tags || [];
       console.log('[Tags-This-Message] Extracted tags array:', tags);
       console.log('[Tags-This-Message] Tags length:', tags.length);
@@ -439,11 +444,9 @@ browser.menus.create({
         return;
       }
 
-      // Extract tag keys if tags are objects
-      const tagKeys = tags.map(tag => typeof tag === 'string' ? tag : tag.key);
-      console.log('[Tags-This-Message] Tag keys:', tagKeys);
-
-      await filterByTags(tagKeys);
+      // Tags are already strings, pass directly to filter function
+      console.log('[Tags-This-Message] Using tags:', tags);
+      await filterByTags(tags);
     } catch (error) {
       console.error('[Tags-This-Message] Error:', error);
       ErrorUtils.logError(error, { context: 'tags-this-message menu item' });
@@ -457,10 +460,9 @@ browser.menus.create({
 });
 
 /**
- * Create context menu item for filtering by specific tag (placeholder).
- * This will be dynamically populated with available tags.
- * Note: Full tag submenu implementation requires tag caching and dynamic menu building.
- * This is a simplified version that filters by a predefined tag or shows error.
+ * Create context menu item for tag filtering info.
+ * Note: There is no browser.messages.tags.list() API to list all user tags.
+ * Tags are only available via individual message objects.
  */
 browser.menus.create({
   id: "tags-placeholder",
@@ -468,49 +470,21 @@ browser.menus.create({
   contexts: ["message_list"],
   async onclick(info) {
     try {
-      console.log('[Tags-Choose] Attempting to get all tags...');
+      console.log('[Tags-Choose] Tag filter help requested');
 
-      // Try to get all tags
-      let tags;
-      try {
-        tags = await browser.messages.tags.list();
-        console.log('[Tags-Choose] Got tags from API:', tags);
-        console.log('[Tags-Choose] Tags count:', tags?.length);
-      } catch (e) {
-        console.error('[Tags-Choose] Error getting tags:', e);
-        // Tags API might not be available
-        await ErrorUtils.showErrorNotification(
-          'Tags Not Available',
-          'Tag filtering requires Thunderbird 115+ with messagesRead permission.',
-          { type: 'error' }
-        );
-        return;
-      }
-
-      if (!tags || tags.length === 0) {
-        console.log('[Tags-Choose] No tags defined');
-        await ErrorUtils.showErrorNotification(
-          browser.i18n.getMessage("tagsNoTags"),
-          'Please create tags in Thunderbird first: Tools > Message Tags.',
-          { type: 'info' }
-        );
-        return;
-      }
-
-      // For now, just filter by the first tag as a demo
-      // Full implementation would show a popup UI with all tags
-      const firstTag = tags[0];
-      console.log('[Tags-Choose] Using first tag:', firstTag);
-      console.log('[Tags-Choose] First tag key:', firstTag.key);
-
-      await filterByTags([firstTag.key]);
+      // Explain how to use tag filtering
+      await ErrorUtils.showErrorNotification(
+        'How to Filter by Tags',
+        'Right-click on a tagged message, then select "Filter by This Message\'s Tags".',
+        { type: 'info' }
+      );
 
     } catch (error) {
       console.error('[Tags-Choose] Error:', error);
       ErrorUtils.logError(error, { context: 'tags-choose-tags menu item' });
       await ErrorUtils.showErrorNotification(
         'Filter Failed',
-        'Could not access tags. Please try again.',
+        'Could not show tag filter help. Please try again.',
         { type: 'error' }
       );
     }
