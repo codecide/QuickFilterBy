@@ -50,9 +50,6 @@
   "tagsThisMessage": {
     "message": "按此消息的标签筛选"
   },
-  "tagsChooseTags": {
-    "message": "选择标签..."
-  },
   "tagsNoTags": {
     "message": "Thunderbird 中未定义标签"
   },

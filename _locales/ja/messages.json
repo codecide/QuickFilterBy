@@ -50,9 +50,6 @@
   "tagsThisMessage": {
     "message": "このメッセージのタグでフィルタ"
   },
-  "tagsChooseTags": {
-    "message": "タグを選択..."
-  },
   "tagsNoTags": {
     "message": "Thunderbirdでタグが定義されていません"
   },

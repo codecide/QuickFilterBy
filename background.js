@@ -463,38 +463,6 @@ browser.menus.create({
   },
 });
 
-/**
- * Create context menu item for tag filtering info.
- * Note: There is no browser.messages.tags.list() API to list all user tags.
- * Tags are only available via individual message objects.
- */
-browser.menus.create({
-  id: "tags-placeholder",
-  title: browser.i18n.getMessage("tagsChooseTags"),
-  contexts: ["message_list"],
-  async onclick(info) {
-    try {
-      console.log('[Tags-Choose] Tag filter help requested');
-
-      // Explain how to use tag filtering
-      await ErrorUtils.showErrorNotification(
-        'How to Filter by Tags',
-        'Right-click on a tagged message, then select "Filter by This Message\'s Tags".',
-        { type: 'info' }
-      );
-
-    } catch (error) {
-      console.error('[Tags-Choose] Error:', error);
-      ErrorUtils.logError(error, { context: 'tags-choose-tags menu item' });
-      await ErrorUtils.showErrorNotification(
-        'Filter Failed',
-        'Could not show tag filter help. Please try again.',
-        { type: 'error' }
-      );
-    }
-  },
-});
-
 // ============================================================================
 // ATTACHMENT STATUS FILTERING
 // ============================================================================

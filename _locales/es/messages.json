@@ -50,9 +50,6 @@
   "tagsThisMessage": {
     "message": "Filtrar por Etiquetas de Este Mensaje"
   },
-  "tagsChooseTags": {
-    "message": "Elegir Etiquetas..."
-  },
   "tagsNoTags": {
     "message": "No hay etiquetas definidas en Thunderbird"
   },
