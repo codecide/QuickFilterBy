@@ -13,14 +13,14 @@
   },
   "background": {
     "scripts": [
-      "background.js",
       "src/utils/errors.js",
       "src/utils/version.js",
       "src/utils/dom.js",
       "src/utils/logger.js",
       "src/utils/settings.js",
       "src/utils/features.js",
-      "src/utils/health.js"
+      "src/utils/health.js",
+      "background.js"
     ]
   },
   "options_ui": {
