@@ -19,5 +19,29 @@
   },
   "subject": {
     "message": "Subject"
+  },
+  "date": {
+    "message": "Filter by Date"
+  },
+  "dateToday": {
+    "message": "Filter by Date (Today)"
+  },
+  "dateThisWeek": {
+    "message": "Filter by Date (This Week)"
+  },
+  "dateThisMonth": {
+    "message": "Filter by Date (This Month)"
+  },
+  "dateThisYear": {
+    "message": "Filter by Date (This Year)"
+  },
+  "dateLast7Days": {
+    "message": "Filter by Date (Last 7 Days)"
+  },
+  "dateLast30Days": {
+    "message": "Filter by Date (Last 30 Days)"
+  },
+  "dateNoMessages": {
+    "message": "No messages found in selected date range"
   }
 }

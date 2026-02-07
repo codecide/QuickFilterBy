@@ -124,6 +124,32 @@ describe('background.js - Script Structure', () => {
 
   it('should create subject menu item', () => {
     expect(backgroundScriptContent).toContain('id: "subject"');
+    expect(backgroundScriptContent).toContain('contexts: ["message_list"]');
+  });
+
+  it('should create date-today menu item', () => {
+    expect(backgroundScriptContent).toContain('id: "date-today"');
+    expect(backgroundScriptContent).toContain('filterByDateRange');
+  });
+
+  it('should create date-this-week menu item', () => {
+    expect(backgroundScriptContent).toContain('id: "date-this-week"');
+    expect(backgroundScriptContent).toContain('getThisWeekRange');
+  });
+
+  it('should create date-this-month menu item', () => {
+    expect(backgroundScriptContent).toContain('id: "date-this-month"');
+    expect(backgroundScriptContent).toContain('getThisMonthRange');
+  });
+
+  it('should create date-last-7days menu item', () => {
+    expect(backgroundScriptContent).toContain('id: "date-last-7days"');
+    expect(backgroundScriptContent).toContain('getLastDaysRange(7)');
+  });
+
+  it('should create date-last-30days menu item', () => {
+    expect(backgroundScriptContent).toContain('id: "date-last-30days"');
+    expect(backgroundScriptContent).toContain('getLastDaysRange(30)');
   });
 
   it('should register onShown listener', () => {

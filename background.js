@@ -6,9 +6,10 @@
  * - Menu item click handlers for filtering messages
  * - Alt-click event handling for quick filtering
  * - Tab initialization for all mail tabs
+ * - Date-based message filtering
  *
  * @file background.js
- * @version 14.0.0
+ * @version 14.0.1
  * @license ISC
  */
 
@@ -217,6 +218,160 @@ browser.menus.create({
 });
 
 // ============================================================================
+// DATE FILTERING
+// ============================================================================
+
+/**
+ * Helper function to filter messages by date range.
+ * Queries messages within date range, then filters by message IDs.
+ *
+ * @param {Date} start - Start date
+ * @param {Date} end - End date
+ */
+async function filterByDateRange(start, end) {
+  try {
+    // Query messages within date range
+    const messages = await browser.messages.query({
+      dateRange: { start, end },
+    });
+
+    if (messages.messages.length === 0) {
+      await browser.notifications.create({
+        type: 'basic',
+        title: 'No Messages Found',
+        message: browser.i18n.getMessage('dateNoMessages'),
+      });
+      return;
+    }
+
+    // Extract message IDs and filter by them
+    const messageIds = messages.messages.map(m => m.id);
+
+    await browser.mailTabs.setQuickFilter({
+      text: { text: messageIds.join(',') },
+    });
+  } catch (error) {
+    ErrorUtils.logError(error, { context: 'date filter', start, end });
+    await ErrorUtils.showErrorNotification(
+      'Filter Failed',
+      'Could not filter by date. Please try again.',
+      { type: 'error' }
+    );
+  }
+}
+
+/**
+ * Calculate date range for "Today".
+ * @returns {{start: Date, end: Date}}
+ */
+function getTodayRange() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+  const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+  return { start, end };
+}
+
+/**
+ * Calculate date range for "This Week".
+ * @returns {{start: Date, end: Date}}
+ */
+function getThisWeekRange() {
+  const now = new Date();
+  const dayOfWeek = now.getDay(); // 0 = Sunday
+  const start = new Date(now);
+  start.setDate(now.getDate() - dayOfWeek);
+  start.setHours(0, 0, 0, 0);
+  const end = new Date(start);
+  end.setDate(start.getDate() + 6);
+  end.setHours(23, 59, 59, 999);
+  return { start, end };
+}
+
+/**
+ * Calculate date range for "This Month".
+ * @returns {{start: Date, end: Date}}
+ */
+function getThisMonthRange() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), now.getMonth(), 1, 0, 0, 0);
+  const end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 0, 0);
+  end.setMilliseconds(-1);
+  return { start, end };
+}
+
+/**
+ * Calculate date range for last N days.
+ * @param {number} days - Number of days
+ * @returns {{start: Date, end: Date}}
+ */
+function getLastDaysRange(days) {
+  const now = new Date();
+  const start = new Date(now.getTime() - (days * 24 * 60 * 60 * 1000));
+  return { start, end: now };
+}
+
+/**
+ * Create context menu separator for date filters.
+ */
+browser.menus.create({
+  type: "separator",
+  contexts: ["message_list"],
+});
+
+/**
+ * Create context menu for date filters.
+ */
+browser.menus.create({
+  id: "date-today",
+  title: browser.i18n.getMessage("dateToday"),
+  contexts: ["message_list"],
+  async onclick(info) {
+    const { start, end } = getTodayRange();
+    await filterByDateRange(start, end);
+  },
+});
+
+browser.menus.create({
+  id: "date-this-week",
+  title: browser.i18n.getMessage("dateThisWeek"),
+  contexts: ["message_list"],
+  async onclick(info) {
+    const { start, end } = getThisWeekRange();
+    await filterByDateRange(start, end);
+  },
+});
+
+browser.menus.create({
+  id: "date-this-month",
+  title: browser.i18n.getMessage("dateThisMonth"),
+  contexts: ["message_list"],
+  async onclick(info) {
+    const { start, end } = getThisMonthRange();
+    await filterByDateRange(start, end);
+  },
+});
+
+browser.menus.create({
+  id: "date-last-7days",
+  title: browser.i18n.getMessage("dateLast7Days"),
+  contexts: ["message_list"],
+  async onclick(info) {
+    const { start, end } = getLastDaysRange(7);
+    await filterByDateRange(start, end);
+  },
+});
+
+browser.menus.create({
+  id: "date-last-30days",
+  title: browser.i18n.getMessage("dateLast30Days"),
+  contexts: ["message_list"],
+  async onclick(info) {
+    const { start, end } = getLastDaysRange(30);
+    await filterByDateRange(start, end);
+  },
+});
+
+// ============================================================================
 // MENU VISIBILITY HANDLER
 // ============================================================================
 
@@ -235,7 +390,10 @@ browser.menus.onShown.addListener((info) => {
     const oneMessage = info.selectedMessages && info.selectedMessages.messages.length == 1;
 
     // Update visibility for all menu items
-    const menuIds = ["sender", "senderEmail", "recipient", "recipients", "subject"];
+    const menuIds = [
+      "sender", "senderEmail", "recipient", "recipients", "subject",
+      "date-today", "date-this-week", "date-this-month", "date-last-7days", "date-last-30days"
+    ];
     for (const menuId of menuIds) {
       browser.menus.update(menuId, { visible: oneMessage });
     }
