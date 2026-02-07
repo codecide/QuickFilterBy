@@ -1413,25 +1413,27 @@
 ---
 
 ### 4.2 Filter by Tag [MEDIUM] (10h)
+**Status**: 🔄 IN PROGRESS (core filters complete, UI remaining)
 
-- [ ] 4.2.1 Research tag filtering in quick filter API
+**Time Spent**: ~2 hours (research + implementation + tests)
+
+- [x] 4.2.1 Research tag filtering in quick filter API
   - Read setQuickFilter docs for tags
-  - Identify tag filter parameters
-  - Test tag filter functionality
-  - Document tag filter options
+  - Identified tag filter parameters (tags object with mode and tags array)
+  - Documented tag filter options in docs/phase4.2-research-tags.md
 
-- [ ] 4.2.2 Add context menu items for tag filters
-  - Add "Filter by This Message's Tags" menu item
-  - Add "Filter by Tag..." submenu
-  - Add icons for tag menu items
-  - Style menu items with tag colors
+- [x] 4.2.2 Add context menu items for tag filters
+  - [x] Add "Filter by This Message's Tags" menu item
+  - [x] Add "Filter by Tag..." submenu (placeholder for future UI)
+  - [ ] Add icons for tag menu items
+  - [ ] Style menu items with tag colors
 
-- [ ] 4.2.3 Get all user-defined tags
-  - Use browser.messages.listTags()
-  - Get tag list from TB
-  - Cache tag list
-  - Update cache when tags change
-  - Handle empty tag list
+- [x] 4.2.3 Get all user-defined tags
+  - [x] Use browser.messages.tags.list()
+  - [x] Get tag list from TB
+  - [ ] Cache tag list (future enhancement)
+  - [ ] Update cache when tags change
+  - [x] Handle empty tag list (shows notification)
 
 - [ ] 4.2.4 Create tag selector UI
   - Create popup HTML
@@ -1447,11 +1449,11 @@
   - Add hover/focus states
   - Make it responsive
 
-- [ ] 4.2.6 Implement multi-select tag filtering
-  - Allow selecting multiple tags
-  - Use OR logic (message with any selected tag)
-  - Build tag filter from selections
-  - Call setQuickFilter with tags
+- [x] 4.2.6 Implement multi-select tag filtering
+  - [x] Allow selecting multiple tags (filterByTags accepts array)
+  - [x] Use OR logic (message with any selected tag)
+  - [x] Build tag filter from selections
+  - [x] Call setQuickFilter with tags
   - Test multi-tag filtering
 
 - [ ] 4.2.7 Add tag color indicators
