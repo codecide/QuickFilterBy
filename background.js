@@ -235,7 +235,8 @@ async function filterByDateRange(start, end) {
   try {
     // Query messages within date range
     const messages = await browser.messages.query({
-      dateRange: { start, end },
+      fromDate: start,
+      toDate: end,
     });
 
     if (messages.messages.length === 0) {
