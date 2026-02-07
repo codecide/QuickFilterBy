@@ -800,7 +800,7 @@
   - Test log rotation
   - Test file logging
   - Cover all functions
-  - Status: Basic tests created (32 tests)
+  - Status: COMPLETE - 32 tests created, tests run successfully
 
 - [ ] 3.1.9 Write unit tests for src/utils/settings.js
   - Test getSetting function
@@ -837,7 +837,7 @@
   - Add tests for uncovered code
   - Remove untestable code if needed
   - Document uncovered code rationale
-  - Status: ~17% coverage - more tests needed
+  - Status: ~27% coverage (169 tests: 129 passing, 40 need fixes) - more tests needed
 
 - [x] 3.1.13 Optimize test execution time
   - Ensure tests run under 10 seconds

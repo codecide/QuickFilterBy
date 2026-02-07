@@ -322,6 +322,7 @@ describe('version.js - getThunderbirdVersion', () => {
 
     const version1 = await getThunderbirdVersion();
     const version2 = await getThunderbirdVersion();
+
     expect(version1).toBe(version2);
     expect(browser.runtime.getBrowserInfo).toHaveBeenCalledTimes(1);
   });
@@ -425,7 +426,7 @@ describe('version.js - enforceVersion', () => {
     expect(consoleWarnSpy).toHaveBeenCalledWith(
       expect.stringContaining('too old')
     );
-    expect(global.browser.notifications.create).toHaveBeenCalledWith(
+    expect(browser.notifications.create).toHaveBeenCalledWith(
       expect.objectContaining({
         title: 'QuickFilterBy - Incompatible Version'
       })
