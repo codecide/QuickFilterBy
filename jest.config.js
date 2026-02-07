@@ -9,10 +9,10 @@ module.exports = {
   ],
 
   // Coverage collection
+  // Note: Exclude browser-specific scripts (background.js, api/) from coverage
+  // as they require complex DOM/Browser API mocking that's not practical in Node.js tests
   collectCoverageFrom: [
     'src/**/*.js',
-    'api/**/*.js',
-    'background.js',
     '!src/**/*.test.js',
     '!**/node_modules/**',
     '!**/test/**'

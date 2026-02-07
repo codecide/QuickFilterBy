@@ -376,6 +376,41 @@ const commandsMock = {
 };
 
 /**
+ * Mock browser.MessagesListAdapter API
+ */
+const MessagesListAdapterMock = {
+  onMessageListClick: {
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    hasListener: jest.fn(),
+  },
+};
+
+/**
+ * Mock messenger API (Thunderbird's experimental API)
+ */
+const messengerMock = {
+  tabs: {
+    onCreated: {
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      hasListener: jest.fn(),
+    },
+  },
+  MessagesListAdapter: {
+    initTab: jest.fn().mockResolvedValue(undefined),
+  },
+};
+
+/**
+ * Mock browser.i18n API
+ */
+const i18nMock = {
+  getMessage: jest.fn().mockImplementation((key) => key),
+  getUILanguage: jest.fn().mockReturnValue('en-US'),
+};
+
+/**
  * Complete browser object mock
  */
 const browserMock = {
@@ -386,10 +421,14 @@ const browserMock = {
   runtime: runtimeMock,
   notifications: notificationsMock,
   commands: commandsMock,
+  i18n: i18nMock,
+  MessagesListAdapter: MessagesListAdapterMock,
 };
 
 // Make browser available globally for tests
 global.browser = browserMock;
+// Also create messenger global object (Thunderbird's experimental API)
+global.messenger = messengerMock;
 
 // Helper functions to reset mocks
 browserMock._resetMocks = () => {
@@ -416,6 +455,9 @@ browserMock._resetMocks = () => {
     if (jest.isMockFunction(mock)) mock.mockClear();
   });
   Object.values(commandsMock).forEach((mock) => {
+    if (jest.isMockFunction(mock)) mock.mockClear();
+  });
+  Object.values(i18nMock).forEach((mock) => {
     if (jest.isMockFunction(mock)) mock.mockClear();
   });
   storageMock._clear();
