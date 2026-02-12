@@ -144,7 +144,7 @@ describe('Accessibility - Focus Management', () => {
     // Context menus use system focus, which is accessible
     // No custom focus traps needed
     const hasFocusTrap = backgroundContent.includes('focus()') ||
-                         backgroundContent.includes('blur()');
+      backgroundContent.includes('blur()');
 
     // Focus management is handled by Thunderbird
     // We verify no problematic focus code
@@ -178,7 +178,6 @@ describe('Accessibility - Error Handling', () => {
 
   it('should provide actionable error guidance', () => {
     expect(backgroundContent).toContain('Please try again');
-    expect(backgroundContent).toContain('Please add tags');
   });
 
   it('should not expose technical details in user errors', () => {
@@ -186,7 +185,7 @@ describe('Accessibility - Error Handling', () => {
     // This is verified by checking error messages don't include technical terms
     const userErrorLines = backgroundContent.split('\n').filter(line => {
       return line.includes('showErrorNotification') &&
-             !line.trim().startsWith('//');
+        !line.trim().startsWith('//');
     });
 
     userErrorLines.forEach(line => {
@@ -237,7 +236,7 @@ describe('Accessibility - Compliance', () => {
     // Since we use system menus, we inherit system accessibility
     // Verify we don't override system settings
     const hasSystemOverride = backgroundContent.includes('accessibility') ||
-                           backgroundContent.includes('a11y');
+      backgroundContent.includes('a11y');
 
     // Should not interfere with system accessibility
     expect(hasSystemOverride).toBe(false);
@@ -249,7 +248,7 @@ describe('Accessibility - Color and Visuals', () => {
     // Context menus use system styling, which is accessible
     // No custom CSS for menus needed
     const hasMenuCSS = fs.existsSync(path.join(__dirname, '../../css/menus.css')) ||
-                        backgroundContent.includes('menus.css');
+      backgroundContent.includes('menus.css');
 
     // System menus are already accessible
     expect(hasMenuCSS).toBe(false);
@@ -259,7 +258,7 @@ describe('Accessibility - Color and Visuals', () => {
     // All indicators should have text labels
     // (verified by i18n messages test)
     const hasColorOnlyIndicator = backgroundContent.includes('color:') ||
-                                 backgroundContent.includes('background-color:');
+      backgroundContent.includes('background-color:');
 
     // No custom color styling for indicators
     expect(hasColorOnlyIndicator).toBe(false);

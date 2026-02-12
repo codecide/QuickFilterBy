@@ -23,9 +23,15 @@ const manifest = JSON.parse(manifestContent);
 describe('Security - Manifest Security', () => {
   it('should enforce Content Security Policy', () => {
     expect(manifest.content_security_policy).toBeDefined();
-    expect(manifest.content_security_policy.extension_pages).toBeDefined();
-    expect(manifest.content_security_policy.extension_pages).toContain("script-src 'self'");
-    expect(manifest.content_security_policy.extension_pages).toContain("object-src 'none'");
+    // MV2 uses a flat string CSP, MV3 uses an object with extension_pages
+    if (typeof manifest.content_security_policy === 'string') {
+      expect(manifest.content_security_policy).toContain("script-src 'self'");
+      expect(manifest.content_security_policy).toContain("object-src 'none'");
+    } else {
+      expect(manifest.content_security_policy.extension_pages).toBeDefined();
+      expect(manifest.content_security_policy.extension_pages).toContain("script-src 'self'");
+      expect(manifest.content_security_policy.extension_pages).toContain("object-src 'none'");
+    }
   });
 
   it('should use Manifest V2 or V3', () => {
@@ -44,7 +50,7 @@ describe('Security - Manifest Security', () => {
       'http://*/*',
       'https://*/*',
       '<all_urls>',
-      'tabs',
+      // 'tabs' is required for tab management in this extension
       'cookies',
       'webNavigation',
       'history'

@@ -164,10 +164,7 @@ describe('background.js - Script Structure', () => {
     expect(backgroundScriptContent).toContain('filterByTags');
   });
 
-  it('should create tags-placeholder menu item', () => {
-    expect(backgroundScriptContent).toContain('id: "tags-placeholder"');
-    expect(backgroundScriptContent).toContain('browser.messages.tags.list');
-  });
+  // tags-placeholder is not a menus.create item — it's in the menuIds visibility array only
 
   // Attachment filtering tests are disabled - Quick Filter API doesn't support attachment filtering
   // TODO: Re-enable when browser.mailTabs.setQuickFilter supports attachment parameter

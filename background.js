@@ -25,7 +25,7 @@ try {
   // Fallback if error utils not available
   ErrorUtils = {
     logError: console.error,
-    showErrorNotification: async () => {},
+    showErrorNotification: async () => { },
     wrapAsync: (fn) => fn,
     validateNotNull: (v) => v,
     validateType: (v, t) => v,
@@ -734,7 +734,7 @@ async function openFilterDialog(filterType, value) {
 
 browser.runtime.onMessage.addListener((message) => {
   if (message.action === 'applyEditedFilter') {
-    applyEditedFilter(message.filter, message.tabId);
+    applyEditedFilter(message.filter);
   } else if (message.action === 'cancelFilterDialog') {
     // Dialog cancelled, nothing to do
   } else if (message.action === 'closeFilterDialog') {
@@ -750,16 +750,15 @@ browser.runtime.onMessage.addListener((message) => {
  * @param {Object} filter - Filter object with type and value
  * @param {string} filter.type - Filter type (sender, recipient, subject, etc.)
  * @param {string} filter.value - User-edited filter value
- * @param {number} tabId - Tab ID to apply filter to
  */
-async function applyEditedFilter(filter, tabId) {
+async function applyEditedFilter(filter) {
   try {
     ErrorUtils.validateNotNull(filter, 'filter');
     ErrorUtils.validateNotNull(filter.type, 'filter.type');
     ErrorUtils.validateString(filter.value, 'filter.value');
-    
+
     let quickFilterProperties = {};
-    
+
     switch (filter.type) {
       case 'sender':
         quickFilterProperties = {
@@ -805,8 +804,8 @@ async function applyEditedFilter(filter, tabId) {
       default:
         throw new Error(`Unknown filter type: ${filter.type}`);
     }
-    
-    await browser.mailTabs.setQuickFilter(tabId, quickFilterProperties);
+
+    await browser.mailTabs.setQuickFilter(quickFilterProperties);
   } catch (error) {
     ErrorUtils.logError(error, { context: 'applyEditedFilter', filter });
     await ErrorUtils.showErrorNotification(
